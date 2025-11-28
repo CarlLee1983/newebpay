@@ -9,10 +9,19 @@
 
 ## [1.0.1] - 2025-11-28
 
+### 新增
+
+- **簡化 API**：新增 `NewebPay::payment()` 方法，支援更簡潔的支付流程
+  ```php
+  return NewebPay::payment($orderNo, $amt, $desc, $email)->submit();
+  ```
+- 支援鏈式呼叫選擇支付方式：`->creditCard()`, `->atm()`, `->cvs()`, `->linePay()` 等
+- 新增 `PaymentBuilder` 類別
+
 ### 文件
 
 - 新增前端框架整合指南（Vue 2/3 / React / Next.js / Nuxt 2）
-- 更新 README.md 加入前端整合範例
+- 更新 README.md 加入前端整合範例與簡化 API 說明
 
 ## [1.0.0] - 2025-11-28
 

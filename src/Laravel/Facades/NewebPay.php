@@ -8,6 +8,7 @@ use CarlLee\NewebPay\Actions\CreditCancel;
 use CarlLee\NewebPay\Actions\CreditClose;
 use CarlLee\NewebPay\Actions\EWalletRefund;
 use CarlLee\NewebPay\FormBuilder;
+use CarlLee\NewebPay\Laravel\Services\PaymentBuilder;
 use CarlLee\NewebPay\Laravel\Services\PaymentCoordinator;
 use CarlLee\NewebPay\Operations\AllInOnePayment;
 use CarlLee\NewebPay\Operations\AtmPayment;
@@ -28,6 +29,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * 藍新金流 Facade。
  *
+ * @method static PaymentBuilder payment(string $orderNo, int $amount, string $itemDesc, string $email = '')
  * @method static CreditPayment credit()
  * @method static CreditInstallment creditInstallment()
  * @method static WebAtmPayment webAtm()

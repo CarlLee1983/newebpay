@@ -79,6 +79,36 @@ class PaymentCoordinator
     }
 
     /**
+     * 建立快速支付。
+     *
+     * 提供簡化的支付 API，支援鏈式呼叫。
+     *
+     * @param string $orderNo 訂單編號
+     * @param int $amount 交易金額
+     * @param string $itemDesc 商品描述
+     * @param string $email 付款人 Email
+     * @return PaymentBuilder
+     *
+     * @example
+     * // 基本用法（預設信用卡）
+     * return NewebPay::payment($orderNo, $amt, $desc, $email)->submit();
+     *
+     * // 指定支付方式
+     * return NewebPay::payment($orderNo, $amt, $desc, $email)->atm()->submit();
+     */
+    public function payment(string $orderNo, int $amount, string $itemDesc, string $email = ''): PaymentBuilder
+    {
+        $builder = new PaymentBuilder(
+            $this->merchantID,
+            $this->hashKey,
+            $this->hashIV,
+            $this->isTest
+        );
+
+        return $builder->setOrder($orderNo, $amount, $itemDesc, $email);
+    }
+
+    /**
      * 建立信用卡一次付清支付。
      *
      * @return CreditPayment
