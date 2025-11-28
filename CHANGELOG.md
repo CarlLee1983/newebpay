@@ -7,6 +7,13 @@
 
 ## [Unreleased]
 
+## [1.0.1] - 2025-11-28
+
+### 文件
+
+- 新增前端框架整合指南（Vue 2/3 / React / Next.js / Nuxt 2）
+- 更新 README.md 加入前端整合範例
+
 ## [1.0.0] - 2025-11-28
 
 ### 新增
@@ -57,6 +64,7 @@
 
 - 單元測試 (149 tests, 312 assertions)
 
-[Unreleased]: https://github.com/CarlLee1983/newebpay/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/CarlLee1983/newebpay/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/CarlLee1983/newebpay/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/CarlLee1983/newebpay/releases/tag/v1.0.0
 

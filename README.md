@@ -287,6 +287,89 @@ $refund = EWalletRefund::create('特店編號', 'HashKey', 'HashIV')
 $result = $refund->refund('ORDER123456', 500, 'LINEPAY');
 ```
 
+## 前端框架整合（Vue / React）
+
+藍新金流使用表單 POST 跳轉方式進行支付，前端框架需要透過後端 API 取得加密參數後組裝表單送出。
+
+### 後端 API 範例
+
+```php
+// Laravel Controller
+public function create(Request $request)
+{
+    $payment = NewebPay::credit()
+        ->setMerchantOrderNo($request->order_id)
+        ->setAmt($request->amount)
+        ->setItemDesc($request->item_desc)
+        ->setReturnURL(config('newebpay.return_url'))
+        ->setNotifyURL(config('newebpay.notify_url'));
+
+    return response()->json([
+        'success' => true,
+        'data' => [
+            'action' => $payment->getApiUrl(),
+            'method' => 'POST',
+            'fields' => $payment->getContent(),
+        ],
+    ]);
+}
+```
+
+### Vue 範例
+
+```javascript
+async function checkout() {
+  var response = await fetch('/api/payment/create', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ order_id: 'xxx', amount: 1000 }),
+  });
+  var result = await response.json();
+
+  // 建立表單並送出
+  var form = document.createElement('form');
+  form.method = result.data.method;
+  form.action = result.data.action;
+  Object.keys(result.data.fields).forEach(function(name) {
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = result.data.fields[name];
+    form.appendChild(input);
+  });
+  document.body.appendChild(form);
+  form.submit();
+}
+```
+
+### React 範例
+
+```jsx
+async function checkout() {
+  var response = await fetch('/api/payment/create', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ order_id: 'xxx', amount: 1000 }),
+  });
+  var result = await response.json();
+
+  var form = document.createElement('form');
+  form.method = result.data.method;
+  form.action = result.data.action;
+  Object.keys(result.data.fields).forEach(function(name) {
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = result.data.fields[name];
+    form.appendChild(input);
+  });
+  document.body.appendChild(form);
+  form.submit();
+}
+```
+
+> 📖 完整範例請參閱 [examples/20-frontend-integration.md](examples/20-frontend-integration.md)
+
 ## Docker 開發環境
 
 如果你的本機 PHP 版本與專案需求不符（例如本機 PHP 8.x，但需要在 PHP 7.4 下測試），可以使用 Docker 來建立一致的開發環境。
