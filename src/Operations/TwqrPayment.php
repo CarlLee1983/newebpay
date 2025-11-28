@@ -6,6 +6,7 @@ namespace CarlLee\NewebPay\Operations;
 
 use CarlLee\NewebPay\Content;
 use CarlLee\NewebPay\Parameter\PaymentType;
+use Override;
 
 /**
  * TWQR 付款。
@@ -17,6 +18,7 @@ class TwqrPayment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function initContent(): void
     {
         parent::initContent();
@@ -25,18 +27,19 @@ class TwqrPayment extends Content
     }
 
     /**
-     * @inheritDoc
+     * 取得支付方式。
      */
     public function getPaymentMethod(): string
     {
-        return PaymentType::TWQR;
+        return PaymentType::Twqr->value;
     }
 
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function validation(): void
     {
-        $this->validatorBaseParam();
+        $this->validateBaseParams();
     }
 }

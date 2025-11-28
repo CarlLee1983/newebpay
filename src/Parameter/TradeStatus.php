@@ -9,72 +9,76 @@ namespace CarlLee\NewebPay\Parameter;
  *
  * 對應藍新金流 TradeStatus 回傳參數。
  */
-class TradeStatus
+enum TradeStatus: int
 {
     /** 交易成功 */
-    public const SUCCESS = 1;
+    case Success = 1;
 
     /** 交易付款失敗 */
-    public const FAILED = 0;
+    case Failed = 0;
 
     /** 交易等待付款中 */
-    public const PENDING = 2;
+    case Pending = 2;
 
     /** 交易已取消 */
-    public const CANCELLED = 3;
+    case Cancelled = 3;
 
     /** 交易處理中 */
-    public const PROCESSING = 6;
+    case Processing = 6;
 
     /**
      * 檢查交易是否成功。
-     *
-     * @param int|string $status 狀態值
-     * @return bool
      */
-    public static function isSuccess($status): bool
+    public function isSuccess(): bool
     {
-        return (int) $status === self::SUCCESS;
+        return $this === self::Success;
     }
 
     /**
      * 檢查交易是否等待中。
-     *
-     * @param int|string $status 狀態值
-     * @return bool
      */
-    public static function isPending($status): bool
+    public function isPending(): bool
     {
-        return (int) $status === self::PENDING;
+        return $this === self::Pending;
     }
 
     /**
      * 檢查交易是否失敗。
-     *
-     * @param int|string $status 狀態值
-     * @return bool
      */
-    public static function isFailed($status): bool
+    public function isFailed(): bool
     {
-        return (int) $status === self::FAILED;
+        return $this === self::Failed;
     }
 
     /**
      * 取得狀態說明。
-     *
-     * @param int|string $status 狀態值
-     * @return string
      */
-    public static function getDescription($status): string
+    public function description(): string
     {
-        $descriptions = [
-            self::SUCCESS => '交易成功',
-            self::FAILED => '交易付款失敗',
-            self::PENDING => '交易等待付款中',
-            self::CANCELLED => '交易已取消',
-            self::PROCESSING => '交易處理中',
-        ];
+        return match ($this) {
+            self::Success => '交易成功',
+            self::Failed => '交易付款失敗',
+            self::Pending => '交易等待付款中',
+            self::Cancelled => '交易已取消',
+            self::Processing => '交易處理中',
+        };
+    }
 
-        return $descriptions[(int) $status] ?? '未知狀態';
+    /**
+     * 從整數或字串值建立列舉。
+     */
+    public static function fromValue(int|string $value): ?self
+    {
+        return self::tryFrom((int) $value);
+    }
+
+    /**
+     * 取得所有狀態值。
+     *
+     * @return array<int>
+     */
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
     }
 }

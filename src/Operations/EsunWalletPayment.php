@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CarlLee\NewebPay\Operations;
 
 use CarlLee\NewebPay\Content;
+use Override;
 
 /**
  * 玉山 Wallet 支付。
@@ -16,6 +17,7 @@ class EsunWalletPayment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function initContent(): void
     {
         parent::initContent();
@@ -27,6 +29,7 @@ class EsunWalletPayment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function validation(): void
     {
         $this->validateBaseParams();

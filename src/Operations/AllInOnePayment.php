@@ -6,6 +6,7 @@ namespace CarlLee\NewebPay\Operations;
 
 use CarlLee\NewebPay\Content;
 use CarlLee\NewebPay\Exceptions\NewebPayException;
+use Override;
 
 /**
  * 全支付方式。
@@ -17,6 +18,7 @@ class AllInOnePayment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function initContent(): void
     {
         parent::initContent();
@@ -30,7 +32,7 @@ class AllInOnePayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function enableCredit(int $enable = 1): self
+    public function enableCredit(int $enable = 1): static
     {
         $this->content['CREDIT'] = $enable;
 
@@ -43,7 +45,7 @@ class AllInOnePayment extends Content
      * @param array<int>|string $installments 期數
      * @return static
      */
-    public function enableInstallment($installments): self
+    public function enableInstallment(array|string $installments): static
     {
         $this->content['CREDIT'] = 1;
 
@@ -62,7 +64,7 @@ class AllInOnePayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function enableWebAtm(int $enable = 1): self
+    public function enableWebAtm(int $enable = 1): static
     {
         $this->content['WEBATM'] = $enable;
 
@@ -75,7 +77,7 @@ class AllInOnePayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function enableAtm(int $enable = 1): self
+    public function enableAtm(int $enable = 1): static
     {
         $this->content['VACC'] = $enable;
 
@@ -88,7 +90,7 @@ class AllInOnePayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function enableCvs(int $enable = 1): self
+    public function enableCvs(int $enable = 1): static
     {
         $this->content['CVS'] = $enable;
 
@@ -101,7 +103,7 @@ class AllInOnePayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function enableBarcode(int $enable = 1): self
+    public function enableBarcode(int $enable = 1): static
     {
         $this->content['BARCODE'] = $enable;
 
@@ -114,7 +116,7 @@ class AllInOnePayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function enableLinePay(int $enable = 1): self
+    public function enableLinePay(int $enable = 1): static
     {
         $this->content['LINEPAY'] = $enable;
 
@@ -127,7 +129,7 @@ class AllInOnePayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function enableTaiwanPay(int $enable = 1): self
+    public function enableTaiwanPay(int $enable = 1): static
     {
         $this->content['TAIWANPAY'] = $enable;
 
@@ -140,7 +142,7 @@ class AllInOnePayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function enableEsunWallet(int $enable = 1): self
+    public function enableEsunWallet(int $enable = 1): static
     {
         $this->content['ESUNWALLET'] = $enable;
 
@@ -153,7 +155,7 @@ class AllInOnePayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function enableBitoPay(int $enable = 1): self
+    public function enableBitoPay(int $enable = 1): static
     {
         $this->content['BITOPAY'] = $enable;
 
@@ -166,7 +168,7 @@ class AllInOnePayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function enableCvscom(int $enable = 1): self
+    public function enableCvscom(int $enable = 1): static
     {
         $this->content['CVSCOM'] = $enable;
 
@@ -178,7 +180,7 @@ class AllInOnePayment extends Content
      *
      * @return static
      */
-    public function enableAll(): self
+    public function enableAll(): static
     {
         $this->content['CREDIT'] = 1;
         $this->content['WEBATM'] = 1;
@@ -196,6 +198,7 @@ class AllInOnePayment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function validation(): void
     {
         $this->validateBaseParams();

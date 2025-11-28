@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace CarlLee\NewebPay\Queries;
 
 use CarlLee\NewebPay\Exceptions\NewebPayException;
-use CarlLee\NewebPay\Infrastructure\AES256Encoder;
-use CarlLee\NewebPay\Infrastructure\CheckValueEncoder;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -28,37 +26,12 @@ class QueryOrder
     protected string $requestPath = '/API/QueryTradeInfo';
 
     /**
-     * 特店編號。
-     *
-     * @var string
-     */
-    protected string $merchantID;
-
-    /**
-     * HashKey。
-     *
-     * @var string
-     */
-    protected string $hashKey;
-
-    /**
-     * HashIV。
-     *
-     * @var string
-     */
-    protected string $hashIV;
-
-    /**
      * 是否為測試環境。
-     *
-     * @var bool
      */
     protected bool $isTest = false;
 
     /**
      * HTTP Client。
-     *
-     * @var Client|null
      */
     protected ?Client $httpClient = null;
 
@@ -69,12 +42,11 @@ class QueryOrder
      * @param string $hashKey HashKey
      * @param string $hashIV HashIV
      */
-    public function __construct(string $merchantId, string $hashKey, string $hashIV)
-    {
-        $this->merchantID = $merchantId;
-        $this->hashKey = $hashKey;
-        $this->hashIV = $hashIV;
-    }
+    public function __construct(
+        protected string $merchantId,
+        protected string $hashKey,
+        protected string $hashIV,
+    ) {}
 
     /**
      * 從設定建立查詢物件。
@@ -84,7 +56,7 @@ class QueryOrder
      * @param string $hashIV HashIV
      * @return static
      */
-    public static function create(string $merchantId, string $hashKey, string $hashIV): self
+    public static function create(string $merchantId, string $hashKey, string $hashIV): static
     {
         return new static($merchantId, $hashKey, $hashIV);
     }
@@ -95,7 +67,7 @@ class QueryOrder
      * @param bool $isTest 是否為測試環境
      * @return static
      */
-    public function setTestMode(bool $isTest): self
+    public function setTestMode(bool $isTest): static
     {
         $this->isTest = $isTest;
 
@@ -108,7 +80,7 @@ class QueryOrder
      * @param Client $client HTTP Client
      * @return static
      */
-    public function setHttpClient(Client $client): self
+    public function setHttpClient(Client $client): static
     {
         $this->httpClient = $client;
 
@@ -117,8 +89,6 @@ class QueryOrder
 
     /**
      * 取得 API 基礎網址。
-     *
-     * @return string
      */
     public function getBaseUrl(): string
     {
@@ -129,8 +99,6 @@ class QueryOrder
 
     /**
      * 取得完整 API 網址。
-     *
-     * @return string
      */
     public function getApiUrl(): string
     {
@@ -178,7 +146,7 @@ class QueryOrder
     protected function buildPayload(string $merchantOrderNo, int $amt): array
     {
         $data = [
-            'MerchantID' => $this->merchantID,
+            'MerchantID' => $this->merchantId,
             'Version' => $this->version,
             'RespondType' => 'JSON',
             'TimeStamp' => (string) time(),
@@ -190,7 +158,7 @@ class QueryOrder
         $checkValue = $this->generateCheckValue($merchantOrderNo, $amt);
 
         return [
-            'MerchantID' => $this->merchantID,
+            'MerchantID' => $this->merchantId,
             'Version' => $this->version,
             'RespondType' => 'JSON',
             'CheckValue' => $checkValue,
@@ -216,7 +184,7 @@ class QueryOrder
             'HashIV=%s&Amt=%d&MerchantID=%s&MerchantOrderNo=%s&HashKey=%s',
             $this->hashIV,
             $amt,
-            $this->merchantID,
+            $this->merchantId,
             $merchantOrderNo,
             $this->hashKey
         );
@@ -245,18 +213,12 @@ class QueryOrder
 
     /**
      * 取得 HTTP Client。
-     *
-     * @return Client
      */
     protected function getHttpClient(): Client
     {
-        if ($this->httpClient === null) {
-            $this->httpClient = new Client([
-                'timeout' => 30,
-                'verify' => true,
-            ]);
-        }
-
-        return $this->httpClient;
+        return $this->httpClient ??= new Client([
+            'timeout' => 30,
+            'verify' => true,
+        ]);
     }
 }

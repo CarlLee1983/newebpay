@@ -6,6 +6,7 @@ namespace CarlLee\NewebPay\Operations;
 
 use CarlLee\NewebPay\Content;
 use CarlLee\NewebPay\Exceptions\NewebPayException;
+use Override;
 
 /**
  * 信用卡分期付款。
@@ -19,11 +20,12 @@ class CreditInstallment extends Content
      *
      * @var array<int>
      */
-    private const VALID_INSTALLMENTS = [3, 6, 12, 18, 24, 30];
+    private const array VALID_INSTALLMENTS = [3, 6, 12, 18, 24, 30];
 
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function initContent(): void
     {
         parent::initContent();
@@ -41,7 +43,7 @@ class CreditInstallment extends Content
      * @return static
      * @throws NewebPayException 當期數無效時
      */
-    public function setInstallment($installments): self
+    public function setInstallment(array|int $installments): static
     {
         if (!is_array($installments)) {
             $installments = [$installments];
@@ -64,7 +66,7 @@ class CreditInstallment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function setRedeem(int $enable): self
+    public function setRedeem(int $enable): static
     {
         $this->content['CreditRed'] = $enable;
 
@@ -74,6 +76,7 @@ class CreditInstallment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function validation(): void
     {
         $this->validateBaseParams();

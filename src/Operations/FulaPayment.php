@@ -6,6 +6,7 @@ namespace CarlLee\NewebPay\Operations;
 
 use CarlLee\NewebPay\Content;
 use CarlLee\NewebPay\Parameter\PaymentType;
+use Override;
 
 /**
  * Fula 付啦付款。
@@ -17,6 +18,7 @@ class FulaPayment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function initContent(): void
     {
         parent::initContent();
@@ -25,18 +27,19 @@ class FulaPayment extends Content
     }
 
     /**
-     * @inheritDoc
+     * 取得支付方式。
      */
     public function getPaymentMethod(): string
     {
-        return PaymentType::FULA;
+        return PaymentType::Fula->value;
     }
 
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function validation(): void
     {
-        $this->validatorBaseParam();
+        $this->validateBaseParams();
     }
 }

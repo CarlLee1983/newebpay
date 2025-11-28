@@ -8,7 +8,6 @@ use CarlLee\NewebPay\Contracts\NotifyHandlerInterface;
 use CarlLee\NewebPay\Exceptions\NewebPayException;
 use CarlLee\NewebPay\Infrastructure\AES256Encoder;
 use CarlLee\NewebPay\Infrastructure\CheckValueEncoder;
-use CarlLee\NewebPay\Parameter\TradeStatus;
 
 /**
  * 支付完成通知處理器。
@@ -19,17 +18,13 @@ class PaymentNotify implements NotifyHandlerInterface
 {
     /**
      * AES256 編碼器。
-     *
-     * @var AES256Encoder
      */
-    private AES256Encoder $aesEncoder;
+    private readonly AES256Encoder $aesEncoder;
 
     /**
      * CheckValue 編碼器。
-     *
-     * @var CheckValueEncoder
      */
-    private CheckValueEncoder $checkValueEncoder;
+    private readonly CheckValueEncoder $checkValueEncoder;
 
     /**
      * 原始通知資料。
@@ -47,8 +42,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 是否已驗證。
-     *
-     * @var bool
      */
     private bool $verified = false;
 
@@ -71,7 +64,7 @@ class PaymentNotify implements NotifyHandlerInterface
      * @param string $hashIV HashIV
      * @return static
      */
-    public static function create(string $hashKey, string $hashIV): self
+    public static function create(string $hashKey, string $hashIV): static
     {
         return new static($hashKey, $hashIV);
     }
@@ -99,7 +92,7 @@ class PaymentNotify implements NotifyHandlerInterface
             $this->verified = true;
 
             return true;
-        } catch (NewebPayException $e) {
+        } catch (NewebPayException) {
             return false;
         }
     }
@@ -111,7 +104,7 @@ class PaymentNotify implements NotifyHandlerInterface
      * @return static
      * @throws NewebPayException 當驗證失敗時
      */
-    public function verifyOrFail(array $data): self
+    public function verifyOrFail(array $data): static
     {
         if (!$this->verify($data)) {
             throw NewebPayException::checkValueFailed();
@@ -164,8 +157,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得特店編號。
-     *
-     * @return string
      */
     public function getMerchantID(): string
     {
@@ -174,8 +165,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得特店訂單編號。
-     *
-     * @return string
      */
     public function getMerchantOrderNo(): string
     {
@@ -186,8 +175,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得藍新金流交易序號。
-     *
-     * @return string
      */
     public function getTradeNo(): string
     {
@@ -198,8 +185,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得交易金額。
-     *
-     * @return int
      */
     public function getAmt(): int
     {
@@ -210,8 +195,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得支付方式。
-     *
-     * @return string
      */
     public function getPaymentType(): string
     {
@@ -222,8 +205,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得交易時間。
-     *
-     * @return string
      */
     public function getPayTime(): string
     {
@@ -234,8 +215,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得 IP 位址。
-     *
-     * @return string
      */
     public function getIP(): string
     {
@@ -246,8 +225,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得付款銀行。
-     *
-     * @return string
      */
     public function getPayBankCode(): string
     {
@@ -258,8 +235,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得授權碼（信用卡）。
-     *
-     * @return string
      */
     public function getAuthCode(): string
     {
@@ -270,8 +245,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得卡號末四碼（信用卡）。
-     *
-     * @return string
      */
     public function getCard4No(): string
     {
@@ -282,8 +255,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得卡號前六碼（信用卡）。
-     *
-     * @return string
      */
     public function getCard6No(): string
     {
@@ -294,8 +265,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得 ECI 值（3D 驗證）。
-     *
-     * @return string
      */
     public function getECI(): string
     {
@@ -306,8 +275,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得分期期數。
-     *
-     * @return int
      */
     public function getInst(): int
     {
@@ -318,8 +285,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得首期金額。
-     *
-     * @return int
      */
     public function getInstFirst(): int
     {
@@ -330,8 +295,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 取得每期金額。
-     *
-     * @return int
      */
     public function getInstEach(): int
     {
@@ -352,8 +315,6 @@ class PaymentNotify implements NotifyHandlerInterface
 
     /**
      * 是否已驗證。
-     *
-     * @return bool
      */
     public function isVerified(): bool
     {

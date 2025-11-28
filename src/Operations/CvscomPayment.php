@@ -7,6 +7,7 @@ namespace CarlLee\NewebPay\Operations;
 use CarlLee\NewebPay\Content;
 use CarlLee\NewebPay\Exceptions\NewebPayException;
 use CarlLee\NewebPay\Parameter\LgsType;
+use Override;
 
 /**
  * 超商取貨付款支付。
@@ -19,16 +20,17 @@ class CvscomPayment extends Content
     /**
      * 最小金額。
      */
-    public const MIN_AMOUNT = 30;
+    public const int MIN_AMOUNT = 30;
 
     /**
      * 最大金額。
      */
-    public const MAX_AMOUNT = 20000;
+    public const int MAX_AMOUNT = 20000;
 
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function initContent(): void
     {
         parent::initContent();
@@ -40,18 +42,20 @@ class CvscomPayment extends Content
     /**
      * 設定物流類型。
      *
-     * @param string $type 物流類型 (FAMILY, UNIMART, HILIFE, OKMART)
+     * @param string|LgsType $type 物流類型或 LgsType 列舉
      * @return static
      */
-    public function setLgsType(string $type): self
+    public function setLgsType(string|LgsType $type): static
     {
-        $validTypes = LgsType::all();
+        $typeValue = $type instanceof LgsType ? $type->value : $type;
 
-        if (!in_array($type, $validTypes, true)) {
+        $validTypes = LgsType::values();
+
+        if (!in_array($typeValue, $validTypes, true)) {
             throw NewebPayException::invalid('LgsType', '物流類型必須為 FAMILY, UNIMART, HILIFE 或 OKMART');
         }
 
-        $this->content['LgsType'] = $type;
+        $this->content['LgsType'] = $typeValue;
 
         return $this;
     }
@@ -59,7 +63,8 @@ class CvscomPayment extends Content
     /**
      * @inheritDoc
      */
-    public function setAmt(int $amount): self
+    #[Override]
+    public function setAmt(int $amount): static
     {
         if ($amount < self::MIN_AMOUNT || $amount > self::MAX_AMOUNT) {
             throw NewebPayException::invalid(
@@ -74,6 +79,7 @@ class CvscomPayment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function validation(): void
     {
         $this->validateBaseParams();

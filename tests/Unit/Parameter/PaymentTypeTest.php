@@ -12,59 +12,72 @@ use CarlLee\NewebPay\Tests\TestCase;
  */
 class PaymentTypeTest extends TestCase
 {
-    public function testConstants(): void
+    public function testEnumValues(): void
     {
-        $this->assertEquals('CREDIT', PaymentType::CREDIT);
-        $this->assertEquals('CREDITAE', PaymentType::CREDITAE);
-        $this->assertEquals('WEBATM', PaymentType::WEBATM);
-        $this->assertEquals('VACC', PaymentType::VACC);
-        $this->assertEquals('CVS', PaymentType::CVS);
-        $this->assertEquals('BARCODE', PaymentType::BARCODE);
-        $this->assertEquals('LINEPAY', PaymentType::LINEPAY);
-        $this->assertEquals('ESUNWALLET', PaymentType::ESUNWALLET);
-        $this->assertEquals('TAIWANPAY', PaymentType::TAIWANPAY);
-        $this->assertEquals('BITOPAY', PaymentType::BITOPAY);
-        $this->assertEquals('CVSCOM', PaymentType::CVSCOM);
+        $this->assertEquals('CREDIT', PaymentType::Credit->value);
+        $this->assertEquals('CREDITAE', PaymentType::CreditAE->value);
+        $this->assertEquals('WEBATM', PaymentType::WebAtm->value);
+        $this->assertEquals('VACC', PaymentType::Vacc->value);
+        $this->assertEquals('CVS', PaymentType::Cvs->value);
+        $this->assertEquals('BARCODE', PaymentType::Barcode->value);
+        $this->assertEquals('LINEPAY', PaymentType::LinePay->value);
+        $this->assertEquals('ESUNWALLET', PaymentType::EsunWallet->value);
+        $this->assertEquals('TAIWANPAY', PaymentType::TaiwanPay->value);
+        $this->assertEquals('BITOPAY', PaymentType::BitoPay->value);
+        $this->assertEquals('CVSCOM', PaymentType::Cvscom->value);
     }
 
-    public function testAll(): void
+    public function testValues(): void
     {
-        $all = PaymentType::all();
+        $values = PaymentType::values();
 
-        $this->assertIsArray($all);
-        $this->assertContains('CREDIT', $all);
-        $this->assertContains('VACC', $all);
-        $this->assertContains('LINEPAY', $all);
+        $this->assertIsArray($values);
+        $this->assertContains('CREDIT', $values);
+        $this->assertContains('VACC', $values);
+        $this->assertContains('LINEPAY', $values);
     }
 
     public function testIsCredit(): void
     {
-        $this->assertTrue(PaymentType::isCredit('CREDIT'));
-        $this->assertTrue(PaymentType::isCredit('CREDITAE'));
-        $this->assertFalse(PaymentType::isCredit('VACC'));
+        $this->assertTrue(PaymentType::Credit->isCredit());
+        $this->assertTrue(PaymentType::CreditAE->isCredit());
+        $this->assertFalse(PaymentType::Vacc->isCredit());
     }
 
     public function testIsAtm(): void
     {
-        $this->assertTrue(PaymentType::isAtm('WEBATM'));
-        $this->assertTrue(PaymentType::isAtm('VACC'));
-        $this->assertFalse(PaymentType::isAtm('CREDIT'));
+        $this->assertTrue(PaymentType::WebAtm->isAtm());
+        $this->assertTrue(PaymentType::Vacc->isAtm());
+        $this->assertFalse(PaymentType::Credit->isAtm());
     }
 
     public function testIsCvs(): void
     {
-        $this->assertTrue(PaymentType::isCvs('CVS'));
-        $this->assertTrue(PaymentType::isCvs('BARCODE'));
-        $this->assertTrue(PaymentType::isCvs('CVSCOM'));
-        $this->assertFalse(PaymentType::isCvs('CREDIT'));
+        $this->assertTrue(PaymentType::Cvs->isCvs());
+        $this->assertTrue(PaymentType::Barcode->isCvs());
+        $this->assertTrue(PaymentType::Cvscom->isCvs());
+        $this->assertFalse(PaymentType::Credit->isCvs());
     }
 
     public function testIsEWallet(): void
     {
-        $this->assertTrue(PaymentType::isEWallet('LINEPAY'));
-        $this->assertTrue(PaymentType::isEWallet('ESUNWALLET'));
-        $this->assertTrue(PaymentType::isEWallet('TAIWANPAY'));
-        $this->assertTrue(PaymentType::isEWallet('BITOPAY'));
-        $this->assertFalse(PaymentType::isEWallet('CREDIT'));
+        $this->assertTrue(PaymentType::LinePay->isEWallet());
+        $this->assertTrue(PaymentType::EsunWallet->isEWallet());
+        $this->assertTrue(PaymentType::TaiwanPay->isEWallet());
+        $this->assertTrue(PaymentType::BitoPay->isEWallet());
+        $this->assertFalse(PaymentType::Credit->isEWallet());
+    }
+
+    public function testFromString(): void
+    {
+        $this->assertEquals(PaymentType::Credit, PaymentType::fromString('CREDIT'));
+        $this->assertEquals(PaymentType::LinePay, PaymentType::fromString('LINEPAY'));
+        $this->assertNull(PaymentType::fromString('INVALID'));
+    }
+
+    public function testTryFrom(): void
+    {
+        $this->assertEquals(PaymentType::Credit, PaymentType::tryFrom('CREDIT'));
+        $this->assertNull(PaymentType::tryFrom('INVALID'));
     }
 }

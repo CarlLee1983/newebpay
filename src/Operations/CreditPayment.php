@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CarlLee\NewebPay\Operations;
 
 use CarlLee\NewebPay\Content;
-use CarlLee\NewebPay\Exceptions\NewebPayException;
+use Override;
 
 /**
  * 信用卡一次付清支付。
@@ -17,6 +17,7 @@ class CreditPayment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function initContent(): void
     {
         parent::initContent();
@@ -31,7 +32,7 @@ class CreditPayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function setRedeem(int $enable): self
+    public function setRedeem(int $enable): static
     {
         $this->content['CreditRed'] = $enable;
 
@@ -44,7 +45,7 @@ class CreditPayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function setUnionPay(int $enable): self
+    public function setUnionPay(int $enable): static
     {
         $this->content['UNIONPAY'] = $enable;
 
@@ -57,7 +58,7 @@ class CreditPayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function setGooglePay(int $enable): self
+    public function setGooglePay(int $enable): static
     {
         $this->content['ANDROIDPAY'] = $enable;
 
@@ -70,7 +71,7 @@ class CreditPayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function setSamsungPay(int $enable): self
+    public function setSamsungPay(int $enable): static
     {
         $this->content['SAMSUNGPAY'] = $enable;
 
@@ -83,7 +84,7 @@ class CreditPayment extends Content
      * @param int $enable 0=不啟用, 1=啟用
      * @return static
      */
-    public function setTokenTerm(int $enable): self
+    public function setTokenTerm(int $enable): static
     {
         $this->content['TokenTerm'] = $enable;
 
@@ -96,7 +97,7 @@ class CreditPayment extends Content
      * @param string $tokenTermId 識別碼
      * @return static
      */
-    public function setTokenTermDemand(string $tokenTermId): self
+    public function setTokenTermDemand(string $tokenTermId): static
     {
         $this->content['TokenTermDemand'] = $tokenTermId;
 
@@ -106,6 +107,7 @@ class CreditPayment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function validation(): void
     {
         $this->validateBaseParams();

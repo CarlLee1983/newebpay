@@ -11,26 +11,12 @@ use CarlLee\NewebPay\Exceptions\NewebPayException;
  *
  * 依據藍新金流技術文件 4.1.1 AES256 加密規範實作。
  */
-class AES256Encoder
+readonly class AES256Encoder
 {
     /**
      * 加密演算法。
      */
-    private const CIPHER_METHOD = 'AES-256-CBC';
-
-    /**
-     * HashKey。
-     *
-     * @var string
-     */
-    private string $hashKey;
-
-    /**
-     * HashIV。
-     *
-     * @var string
-     */
-    private string $hashIV;
+    private const string CIPHER_METHOD = 'AES-256-CBC';
 
     /**
      * 建立加解密器。
@@ -38,11 +24,10 @@ class AES256Encoder
      * @param string $hashKey HashKey
      * @param string $hashIV HashIV
      */
-    public function __construct(string $hashKey, string $hashIV)
-    {
-        $this->hashKey = $hashKey;
-        $this->hashIV = $hashIV;
-    }
+    public function __construct(
+        private string $hashKey,
+        private string $hashIV,
+    ) {}
 
     /**
      * 加密資料。
@@ -121,10 +106,10 @@ class AES256Encoder
      *
      * @param string $hashKey HashKey
      * @param string $hashIV HashIV
-     * @return static
+     * @return self
      */
     public static function create(string $hashKey, string $hashIV): self
     {
-        return new static($hashKey, $hashIV);
+        return new self($hashKey, $hashIV);
     }
 }

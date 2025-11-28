@@ -9,50 +9,48 @@ namespace CarlLee\NewebPay\Parameter;
  *
  * 對應藍新金流 LgsType 參數。
  */
-class LgsType
+enum LgsType: string
 {
     /** 全家 */
-    public const FAMILY = 'FAMILY';
+    case Family = 'FAMILY';
 
     /** 7-ELEVEN */
-    public const SEVEN = 'UNIMART';
+    case Seven = 'UNIMART';
 
     /** 萊爾富 */
-    public const HILIFE = 'HILIFE';
+    case HiLife = 'HILIFE';
 
     /** OK mart */
-    public const OKMART = 'OKMART';
-
-    /**
-     * 取得所有物流類型。
-     *
-     * @return array<string>
-     */
-    public static function all(): array
-    {
-        return [
-            self::FAMILY,
-            self::SEVEN,
-            self::HILIFE,
-            self::OKMART,
-        ];
-    }
+    case OkMart = 'OKMART';
 
     /**
      * 取得物流類型名稱。
-     *
-     * @param string $type 物流類型
-     * @return string
      */
-    public static function getName(string $type): string
+    public function name(): string
     {
-        $names = [
-            self::FAMILY => '全家',
-            self::SEVEN => '7-ELEVEN',
-            self::HILIFE => '萊爾富',
-            self::OKMART => 'OK mart',
-        ];
+        return match ($this) {
+            self::Family => '全家',
+            self::Seven => '7-ELEVEN',
+            self::HiLife => '萊爾富',
+            self::OkMart => 'OK mart',
+        };
+    }
 
-        return $names[$type] ?? '未知';
+    /**
+     * 從字串值建立列舉。
+     */
+    public static function fromString(string $value): ?self
+    {
+        return self::tryFrom($value);
+    }
+
+    /**
+     * 取得所有物流類型值。
+     *
+     * @return array<string>
+     */
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
     }
 }

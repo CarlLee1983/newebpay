@@ -9,139 +9,116 @@ namespace CarlLee\NewebPay\Parameter;
  *
  * 對應藍新金流 PaymentType 回傳參數。
  */
-class PaymentType
+enum PaymentType: string
 {
     /** 信用卡 */
-    public const CREDIT = 'CREDIT';
+    case Credit = 'CREDIT';
 
     /** 信用卡美國運通 */
-    public const CREDITAE = 'CREDITAE';
+    case CreditAE = 'CREDITAE';
 
     /** WebATM */
-    public const WEBATM = 'WEBATM';
+    case WebAtm = 'WEBATM';
 
     /** ATM 轉帳 */
-    public const VACC = 'VACC';
+    case Vacc = 'VACC';
 
     /** 超商代碼繳費 */
-    public const CVS = 'CVS';
+    case Cvs = 'CVS';
 
     /** 超商條碼繳費 */
-    public const BARCODE = 'BARCODE';
+    case Barcode = 'BARCODE';
 
     /** LINE Pay */
-    public const LINEPAY = 'LINEPAY';
+    case LinePay = 'LINEPAY';
 
     /** 玉山 Wallet */
-    public const ESUNWALLET = 'ESUNWALLET';
+    case EsunWallet = 'ESUNWALLET';
 
     /** 台灣 Pay */
-    public const TAIWANPAY = 'TAIWANPAY';
+    case TaiwanPay = 'TAIWANPAY';
 
     /** BitoPay */
-    public const BITOPAY = 'BITOPAY';
+    case BitoPay = 'BITOPAY';
 
     /** 超商取貨付款 */
-    public const CVSCOM = 'CVSCOM';
+    case Cvscom = 'CVSCOM';
 
     /** Apple Pay */
-    public const APPLEPAY = 'APPLEPAY';
+    case ApplePay = 'APPLEPAY';
 
     /** Google Pay */
-    public const ANDROIDPAY = 'ANDROIDPAY';
+    case AndroidPay = 'ANDROIDPAY';
 
     /** Samsung Pay */
-    public const SAMSUNGPAY = 'SAMSUNGPAY';
+    case SamsungPay = 'SAMSUNGPAY';
 
     /** TWQR */
-    public const TWQR = 'TWQR';
+    case Twqr = 'TWQR';
 
     /** 簡單付微信支付 */
-    public const EZPWECHAT = 'EZPWECHAT';
+    case EzpWechat = 'EZPWECHAT';
 
     /** 簡單付支付寶 */
-    public const EZPALIPAY = 'EZPALIPAY';
+    case EzpAlipay = 'EZPALIPAY';
 
     /** 付啦 */
-    public const FULA = 'FULA';
-
-    /**
-     * 取得所有支付類型。
-     *
-     * @return array<string>
-     */
-    public static function all(): array
-    {
-        return [
-            self::CREDIT,
-            self::CREDITAE,
-            self::WEBATM,
-            self::VACC,
-            self::CVS,
-            self::BARCODE,
-            self::LINEPAY,
-            self::ESUNWALLET,
-            self::TAIWANPAY,
-            self::BITOPAY,
-            self::CVSCOM,
-            self::APPLEPAY,
-            self::ANDROIDPAY,
-            self::SAMSUNGPAY,
-            self::TWQR,
-            self::EZPWECHAT,
-            self::EZPALIPAY,
-            self::FULA,
-        ];
-    }
+    case Fula = 'FULA';
 
     /**
      * 檢查是否為信用卡類型。
-     *
-     * @param string $type 支付類型
-     * @return bool
      */
-    public static function isCredit(string $type): bool
+    public function isCredit(): bool
     {
-        return in_array($type, [self::CREDIT, self::CREDITAE], true);
+        return in_array($this, [self::Credit, self::CreditAE], true);
     }
 
     /**
      * 檢查是否為 ATM 類型。
-     *
-     * @param string $type 支付類型
-     * @return bool
      */
-    public static function isAtm(string $type): bool
+    public function isAtm(): bool
     {
-        return in_array($type, [self::WEBATM, self::VACC], true);
+        return in_array($this, [self::WebAtm, self::Vacc], true);
     }
 
     /**
      * 檢查是否為超商類型。
-     *
-     * @param string $type 支付類型
-     * @return bool
      */
-    public static function isCvs(string $type): bool
+    public function isCvs(): bool
     {
-        return in_array($type, [self::CVS, self::BARCODE, self::CVSCOM], true);
+        return in_array($this, [self::Cvs, self::Barcode, self::Cvscom], true);
     }
 
     /**
      * 檢查是否為電子錢包類型。
-     *
-     * @param string $type 支付類型
-     * @return bool
      */
-    public static function isEWallet(string $type): bool
+    public function isEWallet(): bool
     {
-        return in_array($type, [
-            self::LINEPAY,
-            self::ESUNWALLET,
-            self::TAIWANPAY,
-            self::BITOPAY,
-            self::EZPWECHAT,
-            self::EZPALIPAY,
+        return in_array($this, [
+            self::LinePay,
+            self::EsunWallet,
+            self::TaiwanPay,
+            self::BitoPay,
+            self::EzpWechat,
+            self::EzpAlipay,
         ], true);
+    }
+
+    /**
+     * 從字串值建立列舉（靜態方法保持向後相容）。
+     */
+    public static function fromString(string $value): ?self
+    {
+        return self::tryFrom($value);
+    }
+
+    /**
+     * 取得所有支付類型值。
+     *
+     * @return array<string>
+     */
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
     }
 }

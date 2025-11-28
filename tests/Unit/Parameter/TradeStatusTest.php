@@ -12,44 +12,64 @@ use CarlLee\NewebPay\Tests\TestCase;
  */
 class TradeStatusTest extends TestCase
 {
-    public function testConstants(): void
+    public function testEnumValues(): void
     {
-        $this->assertEquals(1, TradeStatus::SUCCESS);
-        $this->assertEquals(0, TradeStatus::FAILED);
-        $this->assertEquals(2, TradeStatus::PENDING);
-        $this->assertEquals(3, TradeStatus::CANCELLED);
-        $this->assertEquals(6, TradeStatus::PROCESSING);
+        $this->assertEquals(1, TradeStatus::Success->value);
+        $this->assertEquals(0, TradeStatus::Failed->value);
+        $this->assertEquals(2, TradeStatus::Pending->value);
+        $this->assertEquals(3, TradeStatus::Cancelled->value);
+        $this->assertEquals(6, TradeStatus::Processing->value);
     }
 
     public function testIsSuccess(): void
     {
-        $this->assertTrue(TradeStatus::isSuccess(1));
-        $this->assertTrue(TradeStatus::isSuccess('1'));
-        $this->assertFalse(TradeStatus::isSuccess(0));
-        $this->assertFalse(TradeStatus::isSuccess(2));
+        $this->assertTrue(TradeStatus::Success->isSuccess());
+        $this->assertFalse(TradeStatus::Failed->isSuccess());
+        $this->assertFalse(TradeStatus::Pending->isSuccess());
     }
 
     public function testIsPending(): void
     {
-        $this->assertTrue(TradeStatus::isPending(2));
-        $this->assertTrue(TradeStatus::isPending('2'));
-        $this->assertFalse(TradeStatus::isPending(1));
+        $this->assertTrue(TradeStatus::Pending->isPending());
+        $this->assertFalse(TradeStatus::Success->isPending());
     }
 
     public function testIsFailed(): void
     {
-        $this->assertTrue(TradeStatus::isFailed(0));
-        $this->assertTrue(TradeStatus::isFailed('0'));
-        $this->assertFalse(TradeStatus::isFailed(1));
+        $this->assertTrue(TradeStatus::Failed->isFailed());
+        $this->assertFalse(TradeStatus::Success->isFailed());
     }
 
-    public function testGetDescription(): void
+    public function testDescription(): void
     {
-        $this->assertEquals('交易成功', TradeStatus::getDescription(1));
-        $this->assertEquals('交易付款失敗', TradeStatus::getDescription(0));
-        $this->assertEquals('交易等待付款中', TradeStatus::getDescription(2));
-        $this->assertEquals('交易已取消', TradeStatus::getDescription(3));
-        $this->assertEquals('交易處理中', TradeStatus::getDescription(6));
-        $this->assertEquals('未知狀態', TradeStatus::getDescription(99));
+        $this->assertEquals('交易成功', TradeStatus::Success->description());
+        $this->assertEquals('交易付款失敗', TradeStatus::Failed->description());
+        $this->assertEquals('交易等待付款中', TradeStatus::Pending->description());
+        $this->assertEquals('交易已取消', TradeStatus::Cancelled->description());
+        $this->assertEquals('交易處理中', TradeStatus::Processing->description());
+    }
+
+    public function testFromValue(): void
+    {
+        $this->assertEquals(TradeStatus::Success, TradeStatus::fromValue(1));
+        $this->assertEquals(TradeStatus::Success, TradeStatus::fromValue('1'));
+        $this->assertEquals(TradeStatus::Failed, TradeStatus::fromValue(0));
+        $this->assertNull(TradeStatus::fromValue(99));
+    }
+
+    public function testTryFrom(): void
+    {
+        $this->assertEquals(TradeStatus::Success, TradeStatus::tryFrom(1));
+        $this->assertNull(TradeStatus::tryFrom(99));
+    }
+
+    public function testValues(): void
+    {
+        $values = TradeStatus::values();
+
+        $this->assertIsArray($values);
+        $this->assertContains(1, $values);
+        $this->assertContains(0, $values);
+        $this->assertContains(2, $values);
     }
 }

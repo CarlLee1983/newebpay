@@ -6,6 +6,7 @@ namespace CarlLee\NewebPay\Operations;
 
 use CarlLee\NewebPay\Content;
 use CarlLee\NewebPay\Exceptions\NewebPayException;
+use Override;
 
 /**
  * 超商條碼繳費支付。
@@ -18,16 +19,17 @@ class BarcodePayment extends Content
     /**
      * 最小金額。
      */
-    public const MIN_AMOUNT = 20;
+    public const int MIN_AMOUNT = 20;
 
     /**
      * 最大金額。
      */
-    public const MAX_AMOUNT = 40000;
+    public const int MAX_AMOUNT = 40000;
 
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function initContent(): void
     {
         parent::initContent();
@@ -39,7 +41,8 @@ class BarcodePayment extends Content
     /**
      * @inheritDoc
      */
-    public function setAmt(int $amount): self
+    #[Override]
+    public function setAmt(int $amount): static
     {
         if ($amount < self::MIN_AMOUNT || $amount > self::MAX_AMOUNT) {
             throw NewebPayException::invalid(
@@ -54,6 +57,7 @@ class BarcodePayment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function validation(): void
     {
         $this->validateBaseParams();

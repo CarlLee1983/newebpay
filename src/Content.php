@@ -19,17 +19,17 @@ abstract class Content implements PaymentInterface
     /**
      * 特店訂單編號最大長度。
      */
-    public const MERCHANT_ORDER_NO_MAX_LENGTH = 30;
+    public const int MERCHANT_ORDER_NO_MAX_LENGTH = 30;
 
     /**
      * 商品資訊最大長度。
      */
-    public const ITEM_DESC_MAX_LENGTH = 50;
+    public const int ITEM_DESC_MAX_LENGTH = 50;
 
     /**
      * Email 最大長度。
      */
-    public const EMAIL_MAX_LENGTH = 50;
+    public const int EMAIL_MAX_LENGTH = 50;
 
     /**
      * MPG API 版本。
@@ -42,30 +42,7 @@ abstract class Content implements PaymentInterface
     protected string $requestPath = '/MPG/mpg_gateway';
 
     /**
-     * 特店編號。
-     *
-     * @var string
-     */
-    protected string $merchantID = '';
-
-    /**
-     * HashKey。
-     *
-     * @var string
-     */
-    protected string $hashKey = '';
-
-    /**
-     * HashIV。
-     *
-     * @var string
-     */
-    protected string $hashIV = '';
-
-    /**
      * 是否為測試環境。
-     *
-     * @var bool
      */
     protected bool $isTest = false;
 
@@ -78,15 +55,11 @@ abstract class Content implements PaymentInterface
 
     /**
      * AES256 編碼器。
-     *
-     * @var AES256Encoder|null
      */
     protected ?AES256Encoder $aesEncoder = null;
 
     /**
      * CheckValue 編碼器。
-     *
-     * @var CheckValueEncoder|null
      */
     protected ?CheckValueEncoder $checkValueEncoder = null;
 
@@ -97,24 +70,21 @@ abstract class Content implements PaymentInterface
      * @param string $hashKey HashKey
      * @param string $hashIV HashIV
      */
-    public function __construct(string $merchantId = '', string $hashKey = '', string $hashIV = '')
-    {
-        $this->setMerchantID($merchantId);
-        $this->setHashKey($hashKey);
-        $this->setHashIV($hashIV);
-
+    public function __construct(
+        protected string $merchantId = '',
+        protected string $hashKey = '',
+        protected string $hashIV = '',
+    ) {
         $this->initContent();
     }
 
     /**
      * 初始化內容。
-     *
-     * @return void
      */
     protected function initContent(): void
     {
         $this->content = [
-            'MerchantID' => $this->merchantID,
+            'MerchantID' => $this->merchantId,
             'MerchantOrderNo' => '',
             'TimeStamp' => (string) time(),
             'Version' => $this->version,
@@ -131,9 +101,9 @@ abstract class Content implements PaymentInterface
      * @param string $id 特店編號
      * @return static
      */
-    public function setMerchantID(string $id): self
+    public function setMerchantID(string $id): static
     {
-        $this->merchantID = $id;
+        $this->merchantId = $id;
         $this->content['MerchantID'] = $id;
 
         return $this;
@@ -141,12 +111,10 @@ abstract class Content implements PaymentInterface
 
     /**
      * 取得特店編號。
-     *
-     * @return string
      */
     public function getMerchantID(): string
     {
-        return $this->merchantID;
+        return $this->merchantId;
     }
 
     /**
@@ -155,7 +123,7 @@ abstract class Content implements PaymentInterface
      * @param string $key HashKey
      * @return static
      */
-    public function setHashKey(string $key): self
+    public function setHashKey(string $key): static
     {
         $this->hashKey = $key;
 
@@ -168,7 +136,7 @@ abstract class Content implements PaymentInterface
      * @param string $iv HashIV
      * @return static
      */
-    public function setHashIV(string $iv): self
+    public function setHashIV(string $iv): static
     {
         $this->hashIV = $iv;
 
@@ -181,7 +149,7 @@ abstract class Content implements PaymentInterface
      * @param bool $isTest 是否為測試環境
      * @return static
      */
-    public function setTestMode(bool $isTest): self
+    public function setTestMode(bool $isTest): static
     {
         $this->isTest = $isTest;
 
@@ -190,8 +158,6 @@ abstract class Content implements PaymentInterface
 
     /**
      * 是否為測試環境。
-     *
-     * @return bool
      */
     public function isTestMode(): bool
     {
@@ -201,7 +167,7 @@ abstract class Content implements PaymentInterface
     /**
      * @inheritDoc
      */
-    public function setMerchantOrderNo(string $orderNo): self
+    public function setMerchantOrderNo(string $orderNo): static
     {
         if (strlen($orderNo) > self::MERCHANT_ORDER_NO_MAX_LENGTH) {
             throw NewebPayException::tooLong('MerchantOrderNo', self::MERCHANT_ORDER_NO_MAX_LENGTH);
@@ -218,7 +184,7 @@ abstract class Content implements PaymentInterface
      * @param int|string $timestamp Unix 時間戳記
      * @return static
      */
-    public function setTimeStamp($timestamp): self
+    public function setTimeStamp(int|string $timestamp): static
     {
         $this->content['TimeStamp'] = (string) $timestamp;
 
@@ -228,7 +194,7 @@ abstract class Content implements PaymentInterface
     /**
      * @inheritDoc
      */
-    public function setAmt(int $amount): self
+    public function setAmt(int $amount): static
     {
         if ($amount <= 0) {
             throw NewebPayException::invalid('Amt', '金額必須大於 0');
@@ -242,7 +208,7 @@ abstract class Content implements PaymentInterface
     /**
      * @inheritDoc
      */
-    public function setItemDesc(string $desc): self
+    public function setItemDesc(string $desc): static
     {
         if (strlen($desc) > self::ITEM_DESC_MAX_LENGTH) {
             throw NewebPayException::tooLong('ItemDesc', self::ITEM_DESC_MAX_LENGTH);
@@ -259,7 +225,7 @@ abstract class Content implements PaymentInterface
      * @param int $seconds 秒數 (60-900)
      * @return static
      */
-    public function setTradeLimit(int $seconds): self
+    public function setTradeLimit(int $seconds): static
     {
         if ($seconds < 60 || $seconds > 900) {
             throw NewebPayException::invalid('TradeLimit', '限制秒數必須在 60-900 之間');
@@ -276,7 +242,7 @@ abstract class Content implements PaymentInterface
      * @param string $expireDate 格式 Y-m-d
      * @return static
      */
-    public function setExpireDate(string $expireDate): self
+    public function setExpireDate(string $expireDate): static
     {
         $this->content['ExpireDate'] = $expireDate;
 
@@ -286,7 +252,7 @@ abstract class Content implements PaymentInterface
     /**
      * @inheritDoc
      */
-    public function setReturnURL(string $url): self
+    public function setReturnURL(string $url): static
     {
         $this->content['ReturnURL'] = $url;
 
@@ -296,7 +262,7 @@ abstract class Content implements PaymentInterface
     /**
      * @inheritDoc
      */
-    public function setNotifyURL(string $url): self
+    public function setNotifyURL(string $url): static
     {
         $this->content['NotifyURL'] = $url;
 
@@ -309,7 +275,7 @@ abstract class Content implements PaymentInterface
      * @param string $url 網址
      * @return static
      */
-    public function setCustomerURL(string $url): self
+    public function setCustomerURL(string $url): static
     {
         $this->content['CustomerURL'] = $url;
 
@@ -322,7 +288,7 @@ abstract class Content implements PaymentInterface
      * @param string $url 網址
      * @return static
      */
-    public function setClientBackURL(string $url): self
+    public function setClientBackURL(string $url): static
     {
         $this->content['ClientBackURL'] = $url;
 
@@ -335,7 +301,7 @@ abstract class Content implements PaymentInterface
      * @param string $email Email
      * @return static
      */
-    public function setEmail(string $email): self
+    public function setEmail(string $email): static
     {
         if (strlen($email) > self::EMAIL_MAX_LENGTH) {
             throw NewebPayException::tooLong('Email', self::EMAIL_MAX_LENGTH);
@@ -352,7 +318,7 @@ abstract class Content implements PaymentInterface
      * @param int $modify 0=不可修改, 1=可修改
      * @return static
      */
-    public function setEmailModify(int $modify): self
+    public function setEmailModify(int $modify): static
     {
         $this->content['EmailModify'] = $modify;
 
@@ -365,7 +331,7 @@ abstract class Content implements PaymentInterface
      * @param string $orderComment 備註
      * @return static
      */
-    public function setOrderComment(string $orderComment): self
+    public function setOrderComment(string $orderComment): static
     {
         $this->content['OrderComment'] = $orderComment;
 
@@ -378,7 +344,7 @@ abstract class Content implements PaymentInterface
      * @param string $lang zh-tw 或 en
      * @return static
      */
-    public function setLangType(string $lang): self
+    public function setLangType(string $lang): static
     {
         $this->content['LangType'] = $lang;
 
@@ -395,8 +361,6 @@ abstract class Content implements PaymentInterface
 
     /**
      * 取得 API 基礎網址。
-     *
-     * @return string
      */
     public function getBaseUrl(): string
     {
@@ -407,8 +371,6 @@ abstract class Content implements PaymentInterface
 
     /**
      * 取得完整 API 網址。
-     *
-     * @return string
      */
     public function getApiUrl(): string
     {
@@ -417,37 +379,24 @@ abstract class Content implements PaymentInterface
 
     /**
      * 取得 AES256 編碼器。
-     *
-     * @return AES256Encoder
      */
     public function getAesEncoder(): AES256Encoder
     {
-        if ($this->aesEncoder === null) {
-            $this->aesEncoder = new AES256Encoder($this->hashKey, $this->hashIV);
-        }
-
-        return $this->aesEncoder;
+        return $this->aesEncoder ??= new AES256Encoder($this->hashKey, $this->hashIV);
     }
 
     /**
      * 取得 CheckValue 編碼器。
-     *
-     * @return CheckValueEncoder
      */
     public function getCheckValueEncoder(): CheckValueEncoder
     {
-        if ($this->checkValueEncoder === null) {
-            $this->checkValueEncoder = new CheckValueEncoder($this->hashKey, $this->hashIV);
-        }
-
-        return $this->checkValueEncoder;
+        return $this->checkValueEncoder ??= new CheckValueEncoder($this->hashKey, $this->hashIV);
     }
 
     /**
      * 驗證內容資料。
      *
      * @throws NewebPayException 當驗證失敗時
-     * @return void
      */
     abstract protected function validation(): void;
 
@@ -455,11 +404,10 @@ abstract class Content implements PaymentInterface
      * 驗證基礎參數。
      *
      * @throws NewebPayException 當驗證失敗時
-     * @return void
      */
     protected function validateBaseParams(): void
     {
-        if (empty($this->merchantID)) {
+        if (empty($this->merchantId)) {
             throw NewebPayException::required('MerchantID');
         }
 
@@ -484,12 +432,10 @@ abstract class Content implements PaymentInterface
         $this->validation();
 
         // 同步 MerchantID
-        $this->content['MerchantID'] = $this->merchantID;
+        $this->content['MerchantID'] = $this->merchantId;
 
         // 過濾空值
-        return array_filter($this->content, function ($value) {
-            return $value !== '' && $value !== null;
-        });
+        return array_filter($this->content, fn($value) => $value !== '' && $value !== null);
     }
 
     /**
@@ -508,7 +454,7 @@ abstract class Content implements PaymentInterface
         $tradeSha = $checkValueEncoder->generate($tradeInfo);
 
         return [
-            'MerchantID' => $this->merchantID,
+            'MerchantID' => $this->merchantId,
             'TradeInfo' => $tradeInfo,
             'TradeSha' => $tradeSha,
             'Version' => $this->version,
@@ -532,7 +478,7 @@ abstract class Content implements PaymentInterface
      * @param mixed $value 值
      * @return static
      */
-    public function set(string $key, $value): self
+    public function set(string $key, mixed $value): static
     {
         $this->content[$key] = $value;
 
@@ -546,7 +492,7 @@ abstract class Content implements PaymentInterface
      * @param mixed $default 預設值
      * @return mixed
      */
-    public function get(string $key, $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         return $this->content[$key] ?? $default;
     }

@@ -14,30 +14,17 @@ use CarlLee\NewebPay\Contracts\PaymentInterface;
 class FormBuilder
 {
     /**
-     * 支付操作物件。
-     *
-     * @var PaymentInterface
-     */
-    private PaymentInterface $payment;
-
-    /**
      * 表單 ID。
-     *
-     * @var string
      */
     private string $formId = 'newebpay-form';
 
     /**
      * 是否自動送出。
-     *
-     * @var bool
      */
     private bool $autoSubmit = true;
 
     /**
      * 送出按鈕文字。
-     *
-     * @var string
      */
     private string $submitText = '前往付款';
 
@@ -46,10 +33,9 @@ class FormBuilder
      *
      * @param PaymentInterface $payment 支付操作物件
      */
-    public function __construct(PaymentInterface $payment)
-    {
-        $this->payment = $payment;
-    }
+    public function __construct(
+        private readonly PaymentInterface $payment,
+    ) {}
 
     /**
      * 從支付操作建立表單產生器。
@@ -57,7 +43,7 @@ class FormBuilder
      * @param PaymentInterface $payment 支付操作物件
      * @return static
      */
-    public static function create(PaymentInterface $payment): self
+    public static function create(PaymentInterface $payment): static
     {
         return new static($payment);
     }
@@ -68,7 +54,7 @@ class FormBuilder
      * @param string $id 表單 ID
      * @return static
      */
-    public function setFormId(string $id): self
+    public function setFormId(string $id): static
     {
         $this->formId = $id;
 
@@ -81,7 +67,7 @@ class FormBuilder
      * @param bool $autoSubmit 是否自動送出
      * @return static
      */
-    public function setAutoSubmit(bool $autoSubmit): self
+    public function setAutoSubmit(bool $autoSubmit): static
     {
         $this->autoSubmit = $autoSubmit;
 
@@ -94,7 +80,7 @@ class FormBuilder
      * @param string $text 按鈕文字
      * @return static
      */
-    public function setSubmitText(string $text): self
+    public function setSubmitText(string $text): static
     {
         $this->submitText = $text;
 
@@ -103,8 +89,6 @@ class FormBuilder
 
     /**
      * 產生 HTML 表單。
-     *
-     * @return string
      */
     public function build(): string
     {
@@ -127,7 +111,6 @@ class FormBuilder
      * 產生表單開頭。
      *
      * @param string $url 表單 action URL
-     * @return string
      */
     private function buildFormOpen(string $url): string
     {
@@ -142,7 +125,6 @@ class FormBuilder
      * 產生隱藏欄位。
      *
      * @param array<string, mixed> $content 內容
-     * @return string
      */
     private function buildHiddenFields(array $content): string
     {
@@ -161,8 +143,6 @@ class FormBuilder
 
     /**
      * 產生送出按鈕。
-     *
-     * @return string
      */
     private function buildSubmitButton(): string
     {
@@ -177,8 +157,6 @@ class FormBuilder
 
     /**
      * 產生表單結尾。
-     *
-     * @return string
      */
     private function buildFormClose(): string
     {
@@ -187,8 +165,6 @@ class FormBuilder
 
     /**
      * 產生自動送出 JavaScript。
-     *
-     * @return string
      */
     private function buildAutoSubmitScript(): string
     {
@@ -200,8 +176,6 @@ class FormBuilder
 
     /**
      * 取得表單 action URL。
-     *
-     * @return string
      */
     private function getFormAction(): string
     {
@@ -215,8 +189,6 @@ class FormBuilder
 
     /**
      * 輸出表單。
-     *
-     * @return void
      */
     public function render(): void
     {
@@ -225,8 +197,6 @@ class FormBuilder
 
     /**
      * 轉換為字串。
-     *
-     * @return string
      */
     public function __toString(): string
     {

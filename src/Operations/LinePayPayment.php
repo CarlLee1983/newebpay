@@ -6,6 +6,7 @@ namespace CarlLee\NewebPay\Operations;
 
 use CarlLee\NewebPay\Content;
 use CarlLee\NewebPay\Exceptions\NewebPayException;
+use Override;
 
 /**
  * LINE Pay 支付。
@@ -17,11 +18,12 @@ class LinePayPayment extends Content
     /**
      * 商品圖片網址最大長度。
      */
-    public const IMAGE_URL_MAX_LENGTH = 500;
+    public const int IMAGE_URL_MAX_LENGTH = 500;
 
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function initContent(): void
     {
         parent::initContent();
@@ -36,7 +38,7 @@ class LinePayPayment extends Content
      * @param string $url 圖片網址
      * @return static
      */
-    public function setImageUrl(string $url): self
+    public function setImageUrl(string $url): static
     {
         if (strlen($url) > self::IMAGE_URL_MAX_LENGTH) {
             throw NewebPayException::tooLong('ImageUrl', self::IMAGE_URL_MAX_LENGTH);
@@ -50,6 +52,7 @@ class LinePayPayment extends Content
     /**
      * @inheritDoc
      */
+    #[Override]
     protected function validation(): void
     {
         $this->validateBaseParams();

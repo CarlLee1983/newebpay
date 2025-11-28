@@ -26,37 +26,12 @@ class QueryCreditDetail
     protected string $requestPath = '/API/CreditCard/TradeDetail';
 
     /**
-     * 特店編號。
-     *
-     * @var string
-     */
-    protected string $merchantID;
-
-    /**
-     * HashKey。
-     *
-     * @var string
-     */
-    protected string $hashKey;
-
-    /**
-     * HashIV。
-     *
-     * @var string
-     */
-    protected string $hashIV;
-
-    /**
      * 是否為測試環境。
-     *
-     * @var bool
      */
     protected bool $isTest = false;
 
     /**
      * HTTP Client。
-     *
-     * @var Client|null
      */
     protected ?Client $httpClient = null;
 
@@ -67,12 +42,11 @@ class QueryCreditDetail
      * @param string $hashKey HashKey
      * @param string $hashIV HashIV
      */
-    public function __construct(string $merchantId, string $hashKey, string $hashIV)
-    {
-        $this->merchantID = $merchantId;
-        $this->hashKey = $hashKey;
-        $this->hashIV = $hashIV;
-    }
+    public function __construct(
+        protected string $merchantId,
+        protected string $hashKey,
+        protected string $hashIV,
+    ) {}
 
     /**
      * 從設定建立查詢物件。
@@ -82,7 +56,7 @@ class QueryCreditDetail
      * @param string $hashIV HashIV
      * @return static
      */
-    public static function create(string $merchantId, string $hashKey, string $hashIV): self
+    public static function create(string $merchantId, string $hashKey, string $hashIV): static
     {
         return new static($merchantId, $hashKey, $hashIV);
     }
@@ -93,7 +67,7 @@ class QueryCreditDetail
      * @param bool $isTest 是否為測試環境
      * @return static
      */
-    public function setTestMode(bool $isTest): self
+    public function setTestMode(bool $isTest): static
     {
         $this->isTest = $isTest;
 
@@ -106,7 +80,7 @@ class QueryCreditDetail
      * @param Client $client HTTP Client
      * @return static
      */
-    public function setHttpClient(Client $client): self
+    public function setHttpClient(Client $client): static
     {
         $this->httpClient = $client;
 
@@ -115,8 +89,6 @@ class QueryCreditDetail
 
     /**
      * 取得 API 基礎網址。
-     *
-     * @return string
      */
     public function getBaseUrl(): string
     {
@@ -127,8 +99,6 @@ class QueryCreditDetail
 
     /**
      * 取得完整 API 網址。
-     *
-     * @return string
      */
     public function getApiUrl(): string
     {
@@ -206,7 +176,7 @@ class QueryCreditDetail
     protected function buildPayload(array $params): array
     {
         $data = array_merge([
-            'MerchantID' => $this->merchantID,
+            'MerchantID' => $this->merchantId,
             'Version' => $this->version,
             'RespondType' => 'JSON',
             'TimeStamp' => (string) time(),
@@ -233,7 +203,7 @@ class QueryCreditDetail
                 'HashIV=%s&Amt=%d&MerchantID=%s&MerchantOrderNo=%s&HashKey=%s',
                 $this->hashIV,
                 $amt,
-                $this->merchantID,
+                $this->merchantId,
                 $params['MerchantOrderNo'],
                 $this->hashKey
             );
@@ -242,7 +212,7 @@ class QueryCreditDetail
                 'HashIV=%s&Amt=%d&MerchantID=%s&TradeNo=%s&HashKey=%s',
                 $this->hashIV,
                 $amt,
-                $this->merchantID,
+                $this->merchantId,
                 $params['TradeNo'] ?? '',
                 $this->hashKey
             );
@@ -272,18 +242,12 @@ class QueryCreditDetail
 
     /**
      * 取得 HTTP Client。
-     *
-     * @return Client
      */
     protected function getHttpClient(): Client
     {
-        if ($this->httpClient === null) {
-            $this->httpClient = new Client([
-                'timeout' => 30,
-                'verify' => true,
-            ]);
-        }
-
-        return $this->httpClient;
+        return $this->httpClient ??= new Client([
+            'timeout' => 30,
+            'verify' => true,
+        ]);
     }
 }

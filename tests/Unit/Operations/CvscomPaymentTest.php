@@ -36,7 +36,7 @@ class CvscomPaymentTest extends TestCase
 
     public function testSetLgsType(): void
     {
-        $this->payment->setLgsType(LgsType::FAMILY);
+        $this->payment->setLgsType(LgsType::Family);
 
         $content = $this->payment->getRawContent();
 
@@ -45,7 +45,7 @@ class CvscomPaymentTest extends TestCase
 
     public function testSetLgsTypeAll(): void
     {
-        $types = [LgsType::FAMILY, LgsType::SEVEN, LgsType::HILIFE, LgsType::OKMART];
+        $types = [LgsType::Family, LgsType::Seven, LgsType::HiLife, LgsType::OkMart];
 
         foreach ($types as $type) {
             $payment = new CvscomPayment(
@@ -56,7 +56,7 @@ class CvscomPaymentTest extends TestCase
             $payment->setLgsType($type);
 
             $content = $payment->getRawContent();
-            $this->assertEquals($type, $content['LgsType']);
+            $this->assertEquals($type->value, $content['LgsType']);
         }
     }
 

@@ -12,33 +12,18 @@ use CarlLee\NewebPay\Exceptions\NewebPayException;
  * 依據藍新金流技術文件 4.1.5 CheckValue 規範實作。
  * 用於驗證交易資料的完整性。
  */
-class CheckValueEncoder
+readonly class CheckValueEncoder
 {
-    /**
-     * HashKey。
-     *
-     * @var string
-     */
-    private string $hashKey;
-
-    /**
-     * HashIV。
-     *
-     * @var string
-     */
-    private string $hashIV;
-
     /**
      * 建立編碼器。
      *
      * @param string $hashKey HashKey
      * @param string $hashIV HashIV
      */
-    public function __construct(string $hashKey, string $hashIV)
-    {
-        $this->hashKey = $hashKey;
-        $this->hashIV = $hashIV;
-    }
+    public function __construct(
+        private string $hashKey,
+        private string $hashIV,
+    ) {}
 
     /**
      * 產生 CheckValue (TradeSha)。
@@ -90,10 +75,10 @@ class CheckValueEncoder
      *
      * @param string $hashKey HashKey
      * @param string $hashIV HashIV
-     * @return static
+     * @return self
      */
     public static function create(string $hashKey, string $hashIV): self
     {
-        return new static($hashKey, $hashIV);
+        return new self($hashKey, $hashIV);
     }
 }

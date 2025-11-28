@@ -5,49 +5,48 @@ declare(strict_types=1);
 namespace CarlLee\NewebPay\Parameter;
 
 /**
- * 金融機構類型。
+ * 金融機構類型列舉。
  *
  * 依據藍新金流 NDNF-1.1.9 文件定義。
  */
-class BankType
+enum BankType: string
 {
     /** 台灣銀行 */
-    public const BOT = 'BOT';
+    case Bot = 'BOT';
 
     /** 華南銀行 */
-    public const HNCB = 'HNCB';
+    case Hncb = 'HNCB';
 
     /** 彰化銀行 */
-    public const CHB = 'CHB';
-
-    /**
-     * 取得所有金融機構類型。
-     *
-     * @return array<string>
-     */
-    public static function all(): array
-    {
-        return [
-            self::BOT,
-            self::HNCB,
-            self::CHB,
-        ];
-    }
+    case Chb = 'CHB';
 
     /**
      * 取得類型描述。
-     *
-     * @param string $type 金融機構類型
-     * @return string
      */
-    public static function getDescription(string $type): string
+    public function description(): string
     {
-        $descriptions = [
-            self::BOT => '台灣銀行',
-            self::HNCB => '華南銀行',
-            self::CHB => '彰化銀行',
-        ];
+        return match ($this) {
+            self::Bot => '台灣銀行',
+            self::Hncb => '華南銀行',
+            self::Chb => '彰化銀行',
+        };
+    }
 
-        return $descriptions[$type] ?? '未知金融機構';
+    /**
+     * 從字串值建立列舉。
+     */
+    public static function fromString(string $value): ?self
+    {
+        return self::tryFrom($value);
+    }
+
+    /**
+     * 取得所有金融機構類型值。
+     *
+     * @return array<string>
+     */
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
     }
 }

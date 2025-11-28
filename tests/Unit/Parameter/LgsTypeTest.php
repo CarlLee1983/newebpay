@@ -12,32 +12,44 @@ use CarlLee\NewebPay\Tests\TestCase;
  */
 class LgsTypeTest extends TestCase
 {
-    public function testConstants(): void
+    public function testEnumValues(): void
     {
-        $this->assertEquals('FAMILY', LgsType::FAMILY);
-        $this->assertEquals('UNIMART', LgsType::SEVEN);
-        $this->assertEquals('HILIFE', LgsType::HILIFE);
-        $this->assertEquals('OKMART', LgsType::OKMART);
+        $this->assertEquals('FAMILY', LgsType::Family->value);
+        $this->assertEquals('UNIMART', LgsType::Seven->value);
+        $this->assertEquals('HILIFE', LgsType::HiLife->value);
+        $this->assertEquals('OKMART', LgsType::OkMart->value);
     }
 
-    public function testAll(): void
+    public function testValues(): void
     {
-        $all = LgsType::all();
+        $values = LgsType::values();
 
-        $this->assertIsArray($all);
-        $this->assertCount(4, $all);
-        $this->assertContains('FAMILY', $all);
-        $this->assertContains('UNIMART', $all);
-        $this->assertContains('HILIFE', $all);
-        $this->assertContains('OKMART', $all);
+        $this->assertIsArray($values);
+        $this->assertCount(4, $values);
+        $this->assertContains('FAMILY', $values);
+        $this->assertContains('UNIMART', $values);
+        $this->assertContains('HILIFE', $values);
+        $this->assertContains('OKMART', $values);
     }
 
-    public function testGetName(): void
+    public function testName(): void
     {
-        $this->assertEquals('全家', LgsType::getName('FAMILY'));
-        $this->assertEquals('7-ELEVEN', LgsType::getName('UNIMART'));
-        $this->assertEquals('萊爾富', LgsType::getName('HILIFE'));
-        $this->assertEquals('OK mart', LgsType::getName('OKMART'));
-        $this->assertEquals('未知', LgsType::getName('INVALID'));
+        $this->assertEquals('全家', LgsType::Family->name());
+        $this->assertEquals('7-ELEVEN', LgsType::Seven->name());
+        $this->assertEquals('萊爾富', LgsType::HiLife->name());
+        $this->assertEquals('OK mart', LgsType::OkMart->name());
+    }
+
+    public function testFromString(): void
+    {
+        $this->assertEquals(LgsType::Family, LgsType::fromString('FAMILY'));
+        $this->assertEquals(LgsType::Seven, LgsType::fromString('UNIMART'));
+        $this->assertNull(LgsType::fromString('INVALID'));
+    }
+
+    public function testTryFrom(): void
+    {
+        $this->assertEquals(LgsType::Family, LgsType::tryFrom('FAMILY'));
+        $this->assertNull(LgsType::tryFrom('INVALID'));
     }
 }

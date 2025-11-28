@@ -28,51 +28,22 @@ class CreditCancel
     protected string $requestPath = '/API/CreditCard/Cancel';
 
     /**
-     * 特店編號。
-     *
-     * @var string
-     */
-    protected string $merchantID;
-
-    /**
-     * HashKey。
-     *
-     * @var string
-     */
-    protected string $hashKey;
-
-    /**
-     * HashIV。
-     *
-     * @var string
-     */
-    protected string $hashIV;
-
-    /**
      * 是否為測試環境。
-     *
-     * @var bool
      */
     protected bool $isTest = false;
 
     /**
      * AES256 編碼器。
-     *
-     * @var AES256Encoder|null
      */
     protected ?AES256Encoder $aesEncoder = null;
 
     /**
      * CheckValue 編碼器。
-     *
-     * @var CheckValueEncoder|null
      */
     protected ?CheckValueEncoder $checkValueEncoder = null;
 
     /**
      * HTTP Client。
-     *
-     * @var Client|null
      */
     protected ?Client $httpClient = null;
 
@@ -83,12 +54,11 @@ class CreditCancel
      * @param string $hashKey HashKey
      * @param string $hashIV HashIV
      */
-    public function __construct(string $merchantId, string $hashKey, string $hashIV)
-    {
-        $this->merchantID = $merchantId;
-        $this->hashKey = $hashKey;
-        $this->hashIV = $hashIV;
-    }
+    public function __construct(
+        protected string $merchantId,
+        protected string $hashKey,
+        protected string $hashIV,
+    ) {}
 
     /**
      * 從設定建立取消授權物件。
@@ -98,7 +68,7 @@ class CreditCancel
      * @param string $hashIV HashIV
      * @return static
      */
-    public static function create(string $merchantId, string $hashKey, string $hashIV): self
+    public static function create(string $merchantId, string $hashKey, string $hashIV): static
     {
         return new static($merchantId, $hashKey, $hashIV);
     }
@@ -109,7 +79,7 @@ class CreditCancel
      * @param bool $isTest 是否為測試環境
      * @return static
      */
-    public function setTestMode(bool $isTest): self
+    public function setTestMode(bool $isTest): static
     {
         $this->isTest = $isTest;
 
@@ -122,7 +92,7 @@ class CreditCancel
      * @param Client $client HTTP Client
      * @return static
      */
-    public function setHttpClient(Client $client): self
+    public function setHttpClient(Client $client): static
     {
         $this->httpClient = $client;
 
@@ -131,8 +101,6 @@ class CreditCancel
 
     /**
      * 取得 API 基礎網址。
-     *
-     * @return string
      */
     public function getBaseUrl(): string
     {
@@ -143,8 +111,6 @@ class CreditCancel
 
     /**
      * 取得完整 API 網址。
-     *
-     * @return string
      */
     public function getApiUrl(): string
     {
@@ -210,13 +176,11 @@ class CreditCancel
     protected function buildPayload(array $postData): array
     {
         $encoder = $this->getAesEncoder();
-        $checkValueEncoder = $this->getCheckValueEncoder();
 
         $tradeInfo = $encoder->encrypt($postData);
-        $tradeSha = $checkValueEncoder->generate($tradeInfo);
 
         return [
-            'MerchantID_' => $this->merchantID,
+            'MerchantID_' => $this->merchantId,
             'PostData_' => $tradeInfo,
         ];
     }
@@ -242,46 +206,28 @@ class CreditCancel
 
     /**
      * 取得 AES256 編碼器。
-     *
-     * @return AES256Encoder
      */
     protected function getAesEncoder(): AES256Encoder
     {
-        if ($this->aesEncoder === null) {
-            $this->aesEncoder = new AES256Encoder($this->hashKey, $this->hashIV);
-        }
-
-        return $this->aesEncoder;
+        return $this->aesEncoder ??= new AES256Encoder($this->hashKey, $this->hashIV);
     }
 
     /**
      * 取得 CheckValue 編碼器。
-     *
-     * @return CheckValueEncoder
      */
     protected function getCheckValueEncoder(): CheckValueEncoder
     {
-        if ($this->checkValueEncoder === null) {
-            $this->checkValueEncoder = new CheckValueEncoder($this->hashKey, $this->hashIV);
-        }
-
-        return $this->checkValueEncoder;
+        return $this->checkValueEncoder ??= new CheckValueEncoder($this->hashKey, $this->hashIV);
     }
 
     /**
      * 取得 HTTP Client。
-     *
-     * @return Client
      */
     protected function getHttpClient(): Client
     {
-        if ($this->httpClient === null) {
-            $this->httpClient = new Client([
-                'timeout' => 30,
-                'verify' => true,
-            ]);
-        }
-
-        return $this->httpClient;
+        return $this->httpClient ??= new Client([
+            'timeout' => 30,
+            'verify' => true,
+        ]);
     }
 }
