@@ -48,6 +48,12 @@
 |------|------|------|
 | 06 | `06-laravel-usage.php` | Laravel 整合範例 |
 
+### 前端框架整合
+
+| 編號 | 檔案 | 說明 |
+|------|------|------|
+| 20 | `20-frontend-integration.md` | Vue / React / Next.js / Nuxt 整合指南 |
+
 ## 執行前準備
 
 1. 安裝相依套件：
