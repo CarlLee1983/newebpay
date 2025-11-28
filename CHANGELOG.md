@@ -7,6 +7,22 @@
 
 ## [Unreleased]
 
+## [2.0.2] - 2025-11-28
+
+### 新增
+
+- **簡化 API**：新增 `NewebPay::payment()` 方法，支援更簡潔的支付流程
+  ```php
+  return NewebPay::payment($orderNo, $amt, $desc, $email)->submit();
+  ```
+- 支援鏈式呼叫選擇支付方式：`->creditCard()`, `->atm()`, `->cvs()`, `->linePay()` 等
+- 新增 `PaymentBuilder` 類別
+
+### 文件
+
+- 更新 README.md 加入簡化 API 說明
+- 新增 Laravel 版本支援說明（Laravel 10 ~ 11）
+
 ## [2.0.1] - 2025-11-28
 
 ### 文件
@@ -101,7 +117,8 @@ composer require carllee1983/newebpay:^1.0
 
 - 單元測試 (149 tests, 312 assertions)
 
-[Unreleased]: https://github.com/CarlLee1983/newebpay/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/CarlLee1983/newebpay/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/CarlLee1983/newebpay/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/CarlLee1983/newebpay/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/CarlLee1983/newebpay/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/CarlLee1983/newebpay/releases/tag/v1.0.0

@@ -34,6 +34,15 @@ composer require carllee1983/newebpay:^1.0
 - OpenSSL 擴充套件
 - JSON 擴充套件
 
+## Laravel 版本支援
+
+| Laravel 版本 | 支援狀態 |
+|-------------|----------|
+| Laravel 10.x | ✅ 支援 |
+| Laravel 11.x | ✅ 支援 |
+
+> **注意**：v2.x 需要 PHP 8.3+，因此僅支援 Laravel 10.x 以上版本。如需 Laravel 8/9 支援，請使用 v1.x 版本。
+
 ## 安裝
 
 ```bash
@@ -89,13 +98,46 @@ NEWEBPAY_NOTIFY_URL=https://your-site.com/payment/notify
 ```php
 use CarlLee\NewebPay\Laravel\Facades\NewebPay;
 
-// 建立信用卡付款
+// 方式一：簡化 API（推薦）
+Route::post('/pay', function () {
+    $no = 'Vanespl_ec_' . time();
+    $amt = 120;
+    $desc = '我的商品';
+    $email = 'test@example.com';
+
+    return NewebPay::payment($no, $amt, $desc, $email)->submit();
+});
+
+// 方式二：指定支付方式
+Route::post('/pay/atm', function () {
+    return NewebPay::payment('ORDER' . time(), 1000, '商品', 'test@example.com')
+        ->atm('2025-12-31')  // ATM 虛擬帳號，指定繳費期限
+        ->submit();
+});
+
+// 方式三：完整控制
 $payment = NewebPay::credit()
     ->setMerchantOrderNo('ORDER' . time())
     ->setAmt(1000)
     ->setItemDesc('測試商品');
 
 $form = NewebPay::form($payment)->build();
+```
+
+### 簡化 API 支援的支付方式
+
+```php
+NewebPay::payment($no, $amt, $desc, $email)
+    ->creditCard()           // 信用卡一次付清（預設）
+    ->creditInstallment([3, 6, 12])  // 信用卡分期
+    ->webAtm()               // WebATM
+    ->atm('2025-12-31')      // ATM 虛擬帳號
+    ->cvs('2025-12-31')      // 超商代碼
+    ->barcode('2025-12-31')  // 超商條碼
+    ->linePay()              // LINE Pay
+    ->taiwanPay()            // 台灣 Pay
+    ->allInOne()             // 全支付方式
+    ->submit();              // 送出
 ```
 
 ## 支援的支付方式
