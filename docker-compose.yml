@@ -1,0 +1,14 @@
+# Docker Compose 配置 - PHP 7.4 開發環境
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: newebpay-php74
+    volumes:
+      - .:/app
+    working_dir: /app
+    # 保持容器運行（開發用）
+    stdin_open: true
+    tty: true
+
