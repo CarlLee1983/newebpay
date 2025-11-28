@@ -1,9 +1,23 @@
 # 藍新金流 PHP SDK
 
-[![PHP Version](https://img.shields.io/badge/PHP-%3E%3D7.4-blue)](https://www.php.net)
+[![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.3-blue)](https://www.php.net)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![Tests](https://github.com/CarlLee1983/newebpay/actions/workflows/tests.yml/badge.svg)](https://github.com/CarlLee1983/newebpay/actions/workflows/tests.yml)
 
 藍新金流（NewebPay）PHP SDK，提供簡潔易用的 API 整合藍新金流支付服務。
+
+## 版本說明
+
+| 分支/版本 | PHP 需求 | 維護狀態 |
+|-----------|----------|----------|
+| `master` (v2.x) | PHP 8.3+ | 主動開發 |
+| `1.x` (v1.x) | PHP 7.4+ | Bug fix only |
+
+如需 PHP 7.4 支援，請安裝 1.x 版本：
+
+```bash
+composer require carllee1983/newebpay:^1.0
+```
 
 ## 功能特色
 
@@ -12,11 +26,11 @@
 - 支援交易查詢、退款、取消授權
 - 提供 Laravel 整合（Service Provider、Facades）
 - 完整的單元測試（149 tests, 312 assertions）
-- PHP 7.4+ 支援
+- PHP 8.3+ 支援（含 PHP 8.3 新特性）
 
 ## 系統需求
 
-- PHP 7.4 或更高版本
+- PHP 8.3 或更高版本
 - OpenSSL 擴充套件
 - JSON 擴充套件
 

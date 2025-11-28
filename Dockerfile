@@ -1,5 +1,5 @@
-# PHP 7.4 開發環境
-FROM php:7.4-cli
+# PHP 8.3 開發環境
+FROM php:8.3-cli
 
 # 安裝系統依賴
 RUN apt-get update && apt-get install -y \

@@ -7,6 +7,20 @@
 
 ## [Unreleased]
 
+## [2.0.0] - 未發布
+
+### 變更
+
+- **重大變更**：最低 PHP 版本需求提升至 PHP 8.3
+- 更新相依套件版本以配合 PHP 8.3
+
+### 注意
+
+若需要 PHP 7.4+ 支援，請使用 1.x 分支版本：
+```bash
+composer require carllee1983/newebpay:^1.0
+```
+
 ## [1.0.0] - 2025-11-28
 
 ### 新增
@@ -57,6 +71,7 @@
 
 - 單元測試 (149 tests, 312 assertions)
 
-[Unreleased]: https://github.com/CarlLee1983/newebpay/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/CarlLee1983/newebpay/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/CarlLee1983/newebpay/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/CarlLee1983/newebpay/releases/tag/v1.0.0
 
