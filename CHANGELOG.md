@@ -22,6 +22,7 @@
 
 - 新增前端框架整合指南（Vue 2/3 / React / Next.js / Nuxt 2）
 - 更新 README.md 加入前端整合範例與簡化 API 說明
+- 新增 Laravel 版本支援說明（Laravel 8 ~ 11）
 
 ## [1.0.0] - 2025-11-28
 

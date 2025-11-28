@@ -20,6 +20,17 @@
 - OpenSSL 擴充套件
 - JSON 擴充套件
 
+## Laravel 版本支援
+
+| Laravel 版本 | PHP 需求 | 支援狀態 |
+|-------------|----------|----------|
+| Laravel 8.x | PHP 7.3+ | ✅ 支援 |
+| Laravel 9.x | PHP 8.0+ | ✅ 支援 |
+| Laravel 10.x | PHP 8.1+ | ✅ 支援 |
+| Laravel 11.x | PHP 8.2+ | ✅ 支援 |
+
+> **注意**：您的 PHP 版本決定可用的 Laravel 版本。例如 PHP 7.4 僅能使用 Laravel 8.x。
+
 ## 安裝
 
 ```bash
