@@ -7,6 +7,14 @@
 
 ## [Unreleased]
 
+## [2.0.1] - 2025-11-28
+
+### 文件
+
+- 新增前端框架整合指南（Vue 3 / React / Next.js / Nuxt 3）
+- 更新 README.md 加入前端整合範例
+- 更新範例檔案使用 PHP 8.1 Enum 語法
+
 ## [2.0.0] - 2025-11-28
 
 ### 變更
@@ -93,7 +101,8 @@ composer require carllee1983/newebpay:^1.0
 
 - 單元測試 (149 tests, 312 assertions)
 
-[Unreleased]: https://github.com/CarlLee1983/newebpay/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/CarlLee1983/newebpay/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/CarlLee1983/newebpay/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/CarlLee1983/newebpay/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/CarlLee1983/newebpay/releases/tag/v1.0.0
 
