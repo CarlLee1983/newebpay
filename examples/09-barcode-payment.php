@@ -36,4 +36,3 @@ $form = FormBuilder::create($payment)->setAutoSubmit(true);
 
 echo "=== 超商條碼繳費表單 ===\n\n";
 echo $form->build();
-

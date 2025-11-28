@@ -72,4 +72,3 @@ try {
     echo "驗證失敗：{$e->getMessage()}\n";
     exit;
 }
-

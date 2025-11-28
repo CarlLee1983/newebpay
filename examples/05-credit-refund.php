@@ -34,4 +34,3 @@ try {
 } catch (NewebPayException $e) {
     echo "退款失敗：{$e->getMessage()}\n";
 }
-

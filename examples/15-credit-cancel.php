@@ -37,8 +37,6 @@ try {
     echo "訂單編號：{$result['MerchantOrderNo']}\n";
     echo "藍新交易序號：{$result['TradeNo']}\n";
     echo "取消金額：{$result['Amt']}\n";
-    
 } catch (NewebPayException $e) {
     echo "取消授權失敗：{$e->getMessage()}\n";
 }
-

@@ -35,7 +35,8 @@ class FormBuilder
      */
     public function __construct(
         private readonly PaymentInterface $payment,
-    ) {}
+    ) {
+    }
 
     /**
      * 從支付操作建立表單產生器。

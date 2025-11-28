@@ -46,7 +46,8 @@ class QueryOrder
         protected string $merchantId,
         protected string $hashKey,
         protected string $hashIV,
-    ) {}
+    ) {
+    }
 
     /**
      * 從設定建立查詢物件。

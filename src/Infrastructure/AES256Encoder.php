@@ -27,7 +27,8 @@ readonly class AES256Encoder
     public function __construct(
         private string $hashKey,
         private string $hashIV,
-    ) {}
+    ) {
+    }
 
     /**
      * 加密資料。

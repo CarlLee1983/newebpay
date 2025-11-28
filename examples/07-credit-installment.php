@@ -41,4 +41,3 @@ $form = FormBuilder::create($payment)
 
 echo "=== 信用卡分期付款表單 ===\n\n";
 echo $form->build();
-

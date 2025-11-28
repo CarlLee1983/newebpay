@@ -35,4 +35,3 @@ $form = FormBuilder::create($payment)->setAutoSubmit(true);
 
 echo "=== LINE Pay 付款表單 ===\n\n";
 echo $form->build();
-

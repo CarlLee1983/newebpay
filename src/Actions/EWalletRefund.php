@@ -60,7 +60,8 @@ class EWalletRefund
         protected string $merchantId,
         protected string $hashKey,
         protected string $hashIV,
-    ) {}
+    ) {
+    }
 
     /**
      * 從設定建立退款物件。

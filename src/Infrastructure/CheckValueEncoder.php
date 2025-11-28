@@ -23,7 +23,8 @@ readonly class CheckValueEncoder
     public function __construct(
         private string $hashKey,
         private string $hashIV,
-    ) {}
+    ) {
+    }
 
     /**
      * 產生 CheckValue (TradeSha)。

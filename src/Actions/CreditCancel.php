@@ -58,7 +58,8 @@ class CreditCancel
         protected string $merchantId,
         protected string $hashKey,
         protected string $hashIV,
-    ) {}
+    ) {
+    }
 
     /**
      * 從設定建立取消授權物件。

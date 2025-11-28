@@ -30,7 +30,7 @@ try {
         $merchantOrderNo = $notify->getMerchantOrderNo();
         $amt = $notify->getAmt();
         $paymentType = $notify->getPaymentType();
-        
+
         // 超商特有資訊
         $codeNo = $notify->getCodeNo();          // 繳費代碼
         $storeType = $notify->getStoreType();    // 超商類型
@@ -58,7 +58,7 @@ try {
 
         // TODO: 儲存繳費資訊
         // saveCvsInfo($merchantOrderNo, $codeNo, $expireDate);
-        
+
         // TODO: 發送繳費通知給消費者
         // sendPaymentNotification($merchantOrderNo, $codeNo, $expireDate);
     } else {
@@ -74,4 +74,3 @@ try {
     echo "驗證失敗：{$e->getMessage()}\n";
     exit;
 }
-

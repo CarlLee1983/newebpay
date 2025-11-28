@@ -68,7 +68,8 @@ class CreditClose
         protected string $merchantId,
         protected string $hashKey,
         protected string $hashIV,
-    ) {}
+    ) {
+    }
 
     /**
      * 從設定建立請退款物件。

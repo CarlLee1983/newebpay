@@ -44,4 +44,3 @@ try {
 } catch (NewebPayException $e) {
     echo "查詢失敗：{$e->getMessage()}\n";
 }
-

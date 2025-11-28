@@ -4,7 +4,7 @@
  * 電子錢包退款範例。
  *
  * 此範例展示如何對電子錢包交易（LINE Pay、玉山 Wallet、台灣 Pay 等）進行退款。
- * 
+ *
  * 注意：電子錢包退款有時間限制，請參考藍新金流文件。
  */
 
@@ -30,7 +30,7 @@ $refundAmt = 299;
 // ===== LINE Pay 退款 =====
 echo "=== LINE Pay 退款範例 ===\n";
 try {
-    $result = $refund->refund($merchantOrderNo, $refundAmt, PaymentType::LINEPAY);
+    $result = $refund->refund($merchantOrderNo, $refundAmt, PaymentType::LinePay);
 
     echo "退款成功！\n";
     echo "訂單編號：{$result['MerchantOrderNo']}\n";
@@ -44,7 +44,7 @@ echo "\n";
 // ===== 玉山 Wallet 退款 =====
 echo "=== 玉山 Wallet 退款範例 ===\n";
 try {
-    $result = $refund->refund('ESUN1234567890', 500, PaymentType::ESUNWALLET);
+    $result = $refund->refund('ESUN1234567890', 500, PaymentType::EsunWallet);
 
     echo "退款成功！\n";
     echo "訂單編號：{$result['MerchantOrderNo']}\n";
@@ -57,7 +57,7 @@ echo "\n";
 // ===== 台灣 Pay 退款 =====
 echo "=== 台灣 Pay 退款範例 ===\n";
 try {
-    $result = $refund->refund('TWPAY1234567890', 1000, PaymentType::TAIWANPAY);
+    $result = $refund->refund('TWPAY1234567890', 1000, PaymentType::TaiwanPay);
 
     echo "退款成功！\n";
     echo "訂單編號：{$result['MerchantOrderNo']}\n";
@@ -66,12 +66,11 @@ try {
 }
 
 /*
- * 支援的電子錢包類型：
- * - PaymentType::LINEPAY      LINE Pay
- * - PaymentType::ESUNWALLET   玉山 Wallet
- * - PaymentType::TAIWANPAY    台灣 Pay
- * - PaymentType::BITOPAY      BitoPay
- * - PaymentType::EZPWECHAT    簡單付微信
- * - PaymentType::EZPALIPAY    簡單付支付寶
+ * 支援的電子錢包類型（PHP 8.1 Enum）：
+ * - PaymentType::LinePay      LINE Pay
+ * - PaymentType::EsunWallet   玉山 Wallet
+ * - PaymentType::TaiwanPay    台灣 Pay
+ * - PaymentType::BitoPay      BitoPay
+ * - PaymentType::EzpWechat    簡單付微信
+ * - PaymentType::EzpAlipay    簡單付支付寶
  */
-

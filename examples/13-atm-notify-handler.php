@@ -30,7 +30,7 @@ try {
         $merchantOrderNo = $notify->getMerchantOrderNo();
         $tradeNo = $notify->getTradeNo();
         $amt = $notify->getAmt();
-        
+
         // ATM 特有資訊
         $bankCode = $notify->getBankCode();      // 銀行代碼
         $codeNo = $notify->getCodeNo();          // 虛擬帳號
@@ -47,7 +47,7 @@ try {
 
         // TODO: 儲存虛擬帳號資訊
         // saveAtmInfo($merchantOrderNo, $bankCode, $codeNo, $expireDate);
-        
+
         // TODO: 發送繳費通知給消費者
         // sendPaymentNotification($merchantOrderNo, $bankCode, $codeNo, $expireDate);
     } else {
@@ -63,4 +63,3 @@ try {
     echo "驗證失敗：{$e->getMessage()}\n";
     exit;
 }
-
