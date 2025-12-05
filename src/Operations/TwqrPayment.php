@@ -23,7 +23,7 @@ class TwqrPayment extends Content
     {
         parent::initContent();
 
-        $this->content['TWQR'] = 1;
+        $this->content[PaymentType::Twqr->value] = 1;
     }
 
     /**

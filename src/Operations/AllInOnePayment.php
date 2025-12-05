@@ -34,7 +34,7 @@ class AllInOnePayment extends Content
      */
     public function enableCredit(int $enable = 1): static
     {
-        $this->content['CREDIT'] = $enable;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::Credit->value] = $enable;
 
         return $this;
     }
@@ -47,7 +47,7 @@ class AllInOnePayment extends Content
      */
     public function enableInstallment(array|string $installments): static
     {
-        $this->content['CREDIT'] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::Credit->value] = 1;
 
         if (is_array($installments)) {
             $this->content['InstFlag'] = implode(',', $installments);
@@ -66,7 +66,7 @@ class AllInOnePayment extends Content
      */
     public function enableWebAtm(int $enable = 1): static
     {
-        $this->content['WEBATM'] = $enable;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::WebAtm->value] = $enable;
 
         return $this;
     }
@@ -79,7 +79,7 @@ class AllInOnePayment extends Content
      */
     public function enableAtm(int $enable = 1): static
     {
-        $this->content['VACC'] = $enable;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::Vacc->value] = $enable;
 
         return $this;
     }
@@ -92,7 +92,7 @@ class AllInOnePayment extends Content
      */
     public function enableCvs(int $enable = 1): static
     {
-        $this->content['CVS'] = $enable;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::Cvs->value] = $enable;
 
         return $this;
     }
@@ -105,7 +105,7 @@ class AllInOnePayment extends Content
      */
     public function enableBarcode(int $enable = 1): static
     {
-        $this->content['BARCODE'] = $enable;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::Barcode->value] = $enable;
 
         return $this;
     }
@@ -118,7 +118,7 @@ class AllInOnePayment extends Content
      */
     public function enableLinePay(int $enable = 1): static
     {
-        $this->content['LINEPAY'] = $enable;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::LinePay->value] = $enable;
 
         return $this;
     }
@@ -131,7 +131,7 @@ class AllInOnePayment extends Content
      */
     public function enableTaiwanPay(int $enable = 1): static
     {
-        $this->content['TAIWANPAY'] = $enable;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::TaiwanPay->value] = $enable;
 
         return $this;
     }
@@ -144,7 +144,7 @@ class AllInOnePayment extends Content
      */
     public function enableEsunWallet(int $enable = 1): static
     {
-        $this->content['ESUNWALLET'] = $enable;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::EsunWallet->value] = $enable;
 
         return $this;
     }
@@ -157,7 +157,7 @@ class AllInOnePayment extends Content
      */
     public function enableBitoPay(int $enable = 1): static
     {
-        $this->content['BITOPAY'] = $enable;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::BitoPay->value] = $enable;
 
         return $this;
     }
@@ -170,7 +170,7 @@ class AllInOnePayment extends Content
      */
     public function enableCvscom(int $enable = 1): static
     {
-        $this->content['CVSCOM'] = $enable;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::Cvscom->value] = $enable;
 
         return $this;
     }
@@ -182,15 +182,15 @@ class AllInOnePayment extends Content
      */
     public function enableAll(): static
     {
-        $this->content['CREDIT'] = 1;
-        $this->content['WEBATM'] = 1;
-        $this->content['VACC'] = 1;
-        $this->content['CVS'] = 1;
-        $this->content['BARCODE'] = 1;
-        $this->content['LINEPAY'] = 1;
-        $this->content['TAIWANPAY'] = 1;
-        $this->content['ESUNWALLET'] = 1;
-        $this->content['BITOPAY'] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::Credit->value] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::WebAtm->value] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::Vacc->value] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::Cvs->value] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::Barcode->value] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::LinePay->value] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::TaiwanPay->value] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::EsunWallet->value] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::BitoPay->value] = 1;
 
         return $this;
     }
@@ -205,8 +205,16 @@ class AllInOnePayment extends Content
 
         // 檢查至少啟用一種支付方式
         $paymentMethods = [
-            'CREDIT', 'WEBATM', 'VACC', 'CVS', 'BARCODE',
-            'LINEPAY', 'TAIWANPAY', 'ESUNWALLET', 'BITOPAY', 'CVSCOM',
+            \CarlLee\NewebPay\Parameter\PaymentType::Credit->value,
+            \CarlLee\NewebPay\Parameter\PaymentType::WebAtm->value,
+            \CarlLee\NewebPay\Parameter\PaymentType::Vacc->value,
+            \CarlLee\NewebPay\Parameter\PaymentType::Cvs->value,
+            \CarlLee\NewebPay\Parameter\PaymentType::Barcode->value,
+            \CarlLee\NewebPay\Parameter\PaymentType::LinePay->value,
+            \CarlLee\NewebPay\Parameter\PaymentType::TaiwanPay->value,
+            \CarlLee\NewebPay\Parameter\PaymentType::EsunWallet->value,
+            \CarlLee\NewebPay\Parameter\PaymentType::BitoPay->value,
+            \CarlLee\NewebPay\Parameter\PaymentType::Cvscom->value,
         ];
 
         $hasPayment = false;

@@ -23,7 +23,7 @@ class BitoPayPayment extends Content
         parent::initContent();
 
         // 啟用 BitoPay
-        $this->content['BITOPAY'] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::BitoPay->value] = 1;
     }
 
     /**

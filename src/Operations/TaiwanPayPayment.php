@@ -23,7 +23,7 @@ class TaiwanPayPayment extends Content
         parent::initContent();
 
         // 啟用台灣 Pay
-        $this->content['TAIWANPAY'] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::TaiwanPay->value] = 1;
     }
 
     /**

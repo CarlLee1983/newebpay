@@ -23,7 +23,7 @@ class WebAtmPayment extends Content
         parent::initContent();
 
         // 啟用 WebATM
-        $this->content['WEBATM'] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::WebAtm->value] = 1;
     }
 
     /**

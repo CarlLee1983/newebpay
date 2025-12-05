@@ -125,6 +125,12 @@ echo FormBuilder::create($payment)->build();
 | **超商代碼** | `CvsPayment` | `->cvs()` | Kiosk 操作列印 |
 | **超商條碼** | `BarcodePayment` | `->barcode()` | 手機出示條碼 |
 | **LINE Pay** | `LinePayPayment` | `->linePay()` | 行動支付 |
+| **玉山 Wallet** | `EsunWalletPayment` | `->esunWallet()` | 電子錢包 |
+| **台灣 Pay** | `TaiwanPayPayment` | `->taiwanPay()` | 行動支付 |
+| **BitoPay** | `BitoPayPayment` | `->bitoPay()` | 加密貨幣支付 |
+| **超商取貨付款** | `CvscomPayment` | `->cvscom()` | 物流整合 |
+| **Fula 付啦** | `FulaPayment` | `->fula()` | BNPL 先買後付 |
+| **TWQR** | `TwqrPayment` | `->twqr()` | 通用 QR Code |
 | **全支付方式** | `AllInOnePayment` | `->allInOne()` | 一次啟用多種選擇 |
 
 *(完整列表請參閱 [Wiki](wiki_link_here) 或原始碼)*

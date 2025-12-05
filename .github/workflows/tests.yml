@@ -111,6 +111,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     if: github.ref == 'refs/heads/master'
+    env:
+      STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
     steps:
       - name: Checkout code
@@ -128,6 +130,4 @@ jobs:
 
       - name: Run mutation tests
         run: composer test:mutation
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 

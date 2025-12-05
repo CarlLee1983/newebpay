@@ -23,7 +23,7 @@ class EsunWalletPayment extends Content
         parent::initContent();
 
         // 啟用玉山 Wallet
-        $this->content['ESUNWALLET'] = 1;
+        $this->content[\CarlLee\NewebPay\Parameter\PaymentType::EsunWallet->value] = 1;
     }
 
     /**

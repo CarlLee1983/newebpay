@@ -23,7 +23,7 @@ class FulaPayment extends Content
     {
         parent::initContent();
 
-        $this->content['FULA'] = 1;
+        $this->content[PaymentType::Fula->value] = 1;
     }
 
     /**
