@@ -64,7 +64,12 @@
         "cs-fix": "phpcbf --standard=PSR12 src/"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "audit": {
+            "ignore": {
+                "PKSA-8qx3-n5y5-vvnd": "Ignore Laravel 8 security advisory for legacy testbench support"
+            }
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true
