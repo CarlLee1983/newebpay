@@ -7,6 +7,13 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2025-12-05
+
+### 新增
+
+- **測試輔助**：新增 `NewebPay::fake()`，支援 `assertSent`, `assertNotSent`, `assertSentCount` 等測試斷言
+- **Laravel 事件**：新增 `PaymentReceived` 事件，於付款通知驗證成功後觸發
+
 ## [1.0.1] - 2025-11-28
 
 ### 新增
