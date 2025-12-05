@@ -74,11 +74,20 @@ class NewebPayServiceProvider extends ServiceProvider
         $this->app->singleton('newebpay.notify', function ($app) {
             $config = $app['config']['newebpay'];
 
-            return new PaymentNotify(
+            $notify = new \CarlLee\NewebPay\Laravel\Notifications\LaravelPaymentNotify(
                 $config['hash_key'] ?? '',
                 $config['hash_iv'] ?? ''
             );
+
+            if ($app->bound(\Illuminate\Contracts\Events\Dispatcher::class)) {
+                $notify->setDispatcher($app[\Illuminate\Contracts\Events\Dispatcher::class]);
+            }
+
+            return $notify;
         });
+
+        $this->app->alias('newebpay.notify', PaymentNotify::class);
+        $this->app->alias('newebpay.notify', \CarlLee\NewebPay\Laravel\Notifications\LaravelPaymentNotify::class);
     }
 
     /**

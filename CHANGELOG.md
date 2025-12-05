@@ -7,6 +7,16 @@
 
 ## [Unreleased]
 
+## [2.1.0] - 2025-12-05
+
+### 新增
+
+- **測試輔助 (Testing Helpers)**：新增 `NewebPay::fake()` 方法，支援在測試中模擬支付請求。
+  - 支援 `assertSent`, `assertNotSent`, `assertSentCount` 等斷言方法。
+- **Laravel 事件整合**：新增 `PaymentReceived` 事件。
+  - 當 `PaymentNotify` 驗證成功時，自動透過 Laravel Event Dispatcher 發送事件。
+  - 新增 `LaravelPaymentNotify` 類別以處理事件發送邏輯。
+
 ## [2.0.3] - 2025-12-05
 
 ### 文件

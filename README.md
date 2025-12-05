@@ -159,6 +159,63 @@ try {
 }
 ```
 
+## 📢 事件監聽 (Events)
+
+在 Laravel 應用程式中，您也可以透過監聽事件來處理支付結果，讓程式碼更乾淨解耦。
+
+**1. 定義監聽器**
+```php
+namespace App\Listeners;
+
+use CarlLee\NewebPay\Laravel\Events\PaymentReceived;
+
+class HandlePaymentReceived
+{
+    public function handle(PaymentReceived $event)
+    {
+        $notify = $event->notify;
+        
+        if ($notify->isSuccess()) {
+            // 處理付款成功邏輯
+            $orderId = $notify->getMerchantOrderNo();
+            // ...
+        }
+    }
+}
+```
+
+**2. 註冊監聽器 (EventServiceProvider)**
+```php
+protected $listen = [
+    \CarlLee\NewebPay\Laravel\Events\PaymentReceived::class => [
+        \App\Listeners\HandlePaymentReceived::class,
+    ],
+];
+```
+
+## 🧪 測試 (Testing)
+
+我們提供了 `NewebPay::fake()` 讓您在測試中輕鬆模擬支付請求，無需實際發送 HTTP 請求。
+
+```php
+use CarlLee\NewebPay\Laravel\Facades\NewebPay;
+
+public function test_payment_flow()
+{
+    // 1. 啟用模擬模式
+    NewebPay::fake();
+
+    // 2. 執行您的程式碼
+    $this->post('/checkout');
+
+    // 3. 驗證是否建立了正確的支付請求
+    NewebPay::assertSent(function ($payment) {
+        return $payment->get('Amt') === 1000 &&
+               $payment->get('Email') === 'buyer@example.com';
+    });
+}
+```
+
 ## 🔎 交易查詢與退款
 
 **查詢訂單**
