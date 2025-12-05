@@ -54,6 +54,20 @@ use Illuminate\Support\Facades\Facade;
 class NewebPay extends Facade
 {
     /**
+     * Replace the bound instance with a fake.
+     *
+     * @return \CarlLee\NewebPay\Laravel\NewebPayFake
+     */
+    public static function fake()
+    {
+        $fake = new \CarlLee\NewebPay\Laravel\NewebPayFake();
+
+        static::swap($fake);
+
+        return $fake;
+    }
+
+    /**
      * 取得 Facade 存取器。
      *
      * @return string
