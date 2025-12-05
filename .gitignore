@@ -14,3 +14,7 @@ composer.lock
 .DS_Store
 Thumbs.db
 
+
+# VitePress
+docs/.vitepress/dist
+docs/.vitepress/cache
