@@ -276,7 +276,7 @@ class PaymentBuilder
         }
 
         // 設定繳費期限
-        if ($this->expireDate !== null && method_exists($payment, 'setExpireDate')) {
+        if ($this->expireDate !== null) {
             $payment->setExpireDate($this->expireDate);
         }
 
