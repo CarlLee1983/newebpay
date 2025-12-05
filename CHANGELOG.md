@@ -7,6 +7,22 @@
 
 ## [Unreleased]
 
+## [2.2.0] - 2025-12-05
+
+### 新增
+
+- **程式碼品質工具**：
+  - 導入 **PHPStan** (Level 5) 進行靜態分析。
+  - 導入 **Composer Audit** 進行依賴安全性檢查。
+  - 導入 **Infection** 進行變異測試 (Mutation Testing)。
+
+### 變更
+
+- **重構**：
+  - `PaymentReceived` 事件與 `LaravelPaymentNotify` 全面啟用 `strict_types=1`。
+  - 優化 `PaymentReceived` 建構子，使用 Constructor Property Promotion。
+  - `LaravelPaymentNotify::setDispatcher` 改為 Fluent Interface (回傳 `static`)。
+
 ## [2.1.0] - 2025-12-05
 
 ### 新增
@@ -134,7 +150,9 @@ composer require carllee1983/newebpay:^1.0
 
 - 單元測試 (149 tests, 312 assertions)
 
-[Unreleased]: https://github.com/CarlLee1983/newebpay/compare/v2.0.2...HEAD
+[Unreleased]: https://github.com/CarlLee1983/newebpay/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/CarlLee1983/newebpay/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/CarlLee1983/newebpay/compare/v2.0.3...v2.1.0
 [2.0.2]: https://github.com/CarlLee1983/newebpay/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/CarlLee1983/newebpay/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/CarlLee1983/newebpay/compare/v1.0.0...v2.0.0
