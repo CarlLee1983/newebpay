@@ -134,6 +134,4 @@ class NewebPayFake extends PaymentCoordinator implements Fake
 
         return new FakeFormBuilder($payment, $this);
     }
-
-
 }
