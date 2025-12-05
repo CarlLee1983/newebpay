@@ -7,6 +7,13 @@
 
 ## [Unreleased]
 
+## [2.0.3] - 2025-12-05
+
+### 文件
+
+- **README 更新**：重新設計 README.md，包含現代化排版、Badges、更清晰的範例與表格。
+- **社群健康檔案**：新增 `CONTRIBUTING.md`、Issue Templates (`bug_report.md`, `feature_request.md`) 與 `PULL_REQUEST_TEMPLATE.md`。
+
 ## [2.0.2] - 2025-11-28
 
 ### 新增
