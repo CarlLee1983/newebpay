@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CarlLee\NewebPay\Laravel;
 
+use CarlLee\NewebPay\Contracts\PaymentInterface;
 use CarlLee\NewebPay\FormBuilder;
 
 /**
@@ -12,9 +13,9 @@ use CarlLee\NewebPay\FormBuilder;
 class FakeFormBuilder extends FormBuilder
 {
     private NewebPayFake $fake;
-    private $payment;
+    private PaymentInterface $payment;
 
-    public function __construct($payment, NewebPayFake $fake)
+    public function __construct(PaymentInterface $payment, NewebPayFake $fake)
     {
         parent::__construct($payment);
         $this->fake = $fake;

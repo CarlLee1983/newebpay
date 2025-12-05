@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CarlLee\NewebPay\Laravel;
 
 use CarlLee\NewebPay\Content;
+use CarlLee\NewebPay\Contracts\PaymentInterface;
 use CarlLee\NewebPay\FormBuilder;
 use CarlLee\NewebPay\Laravel\Services\PaymentBuilder;
 use CarlLee\NewebPay\Laravel\Services\PaymentCoordinator;
@@ -19,9 +20,21 @@ class NewebPayFake extends PaymentCoordinator implements Fake
     /**
      * The payments that have been created.
      *
-     * @var array<int, Content>
+     * @var array<int, Content|PaymentInterface>
      */
     protected array $payments = [];
+
+    // ... (skipping unchanged methods)
+
+    /**
+     * 供內部調用：紀錄一筆交易
+     *
+     * @param Content|PaymentInterface $payment
+     */
+    public function record($payment): void
+    {
+        $this->payments[] = $payment;
+    }
 
     /**
      * Create a new fake instance.
@@ -71,6 +84,8 @@ class NewebPayFake extends PaymentCoordinator implements Fake
 
     /**
      * Get all of the payments matching a truth-test callback.
+     *
+     * @return Collection<int, Content|PaymentInterface>
      */
     public function sent(callable $callback): Collection
     {
@@ -81,6 +96,8 @@ class NewebPayFake extends PaymentCoordinator implements Fake
 
     /**
      * Get a collection of the payments.
+     *
+     * @return Collection<int, Content|PaymentInterface>
      */
     public function payments(): Collection
     {
@@ -118,11 +135,5 @@ class NewebPayFake extends PaymentCoordinator implements Fake
         return new FakeFormBuilder($payment, $this);
     }
 
-    /**
-     * 供內部調用：紀錄一筆交易
-     */
-    public function record(Content $payment): void
-    {
-        $this->payments[] = $payment;
-    }
+
 }

@@ -7,6 +7,7 @@ namespace CarlLee\NewebPay\Laravel\Facades;
 use CarlLee\NewebPay\Actions\CreditCancel;
 use CarlLee\NewebPay\Actions\CreditClose;
 use CarlLee\NewebPay\Actions\EWalletRefund;
+use CarlLee\NewebPay\Contracts\PaymentInterface;
 use CarlLee\NewebPay\FormBuilder;
 use CarlLee\NewebPay\Laravel\Services\PaymentBuilder;
 use CarlLee\NewebPay\Laravel\Services\PaymentCoordinator;
@@ -42,7 +43,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static BitoPayPayment bitoPay()
  * @method static CvscomPayment cvscom()
  * @method static AllInOnePayment allInOne()
- * @method static FormBuilder form($payment)
+ * @method static FormBuilder form(PaymentInterface $payment)
  * @method static QueryOrder queryOrder()
  * @method static QueryCreditDetail queryCreditDetail()
  * @method static CreditCancel creditCancel()
